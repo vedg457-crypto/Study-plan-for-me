@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB Job Roles Quiz</title>
+  <meta name="description" content="Multiple-choice quiz to learn CISO, Pen Tester, SOC Analyst, Bug Bounty Hunter, and Recommendations, based on HTB theory." />
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #020617;
+      --surface: #020617;
+      --surface-2: #020617;
+      --card: #020617;
+      --border: rgba(148,163,184,0.32);
+      --border-soft: rgba(148,163,184,0.18);
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #22d3ee;
+      --accent-soft: rgba(34,211,238,0.18);
+      --good: #4ade80;
+      --good-soft: rgba(74,222,128,0.18);
+      --bad: #f97373;
+      --bad-soft: rgba(248,113,113,0.18);
+      --radius: 1.2rem;
+      --radius-sm: 0.7rem;
+      --radius-pill: 999px;
+      --shadow: 0 26px 70px rgba(15,23,42,0.95);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: radial-gradient(circle at top, #1e293b 0, #020617 45%, #020617 100%);
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 2rem 1.25rem;
+    }
+    .shell {
+      width: min(1120px, 100%);
+      background:
+        radial-gradient(circle at top left, rgba(34,211,238,0.12), transparent 65%),
+        radial-gradient(circle at bottom right, rgba(168,85,247,0.12), transparent 65%),
+        linear-gradient(135deg, #020617 0, #020617 45%, #020617 100%);
+      border-radius: 1.6rem;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .shell-inner {
+      border-radius: 1.2rem;
+      border: 1px solid var(--border-soft);
+      background: radial-gradient(circle at top, rgba(15,23,42,0.9), rgba(15,23,42,0.9));
+      padding: 2.25rem;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      gap: 1.5rem;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .title-block h1 {
+      font-size: clamp(1.9rem, 3.2vw, 2.5rem);
+      letter-spacing: -0.04em;
+      margin-bottom: 0.4rem;
+    }
+    .title-block h1 span { color: var(--accent); }
+    .title-block p {
+      color: var(--muted);
+      font-size: 0.94rem;
+      max-width: 34rem;
+    }
+    .chips {
+      margin-top: 0.6rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .chip {
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-soft);
+      padding: 0.18rem 0.6rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      background: rgba(15,23,42,0.95);
+    }
+    .status {
+      text-align: right;
+      font-size: 0.85rem;
+    }
+    .status strong {
+      font-size: 1.3rem;
+      display: block;
+    }
+    .status span { color: var(--muted); }
+
+    /* Views */
+    .view {
+      display: none;
+      animation: fadeIn 220ms ease-out;
+    }
+    .view.active { display: grid; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Landing view */
+    .landing {
+      grid-template-columns: minmax(0, 1.3fr) minmax(0,1fr);
+      gap: 1.75rem;
+      align-items: center;
+    }
+    .landing-main h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.4rem;
+    }
+    .landing-main p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      max-width: 34rem;
+    }
+    .role-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    .role-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-soft);
+      padding: 0.18rem 0.6rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      background: rgba(15,23,42,0.96);
+    }
+    .landing-media {
+      display: grid;
+      gap: 0.8rem;
+    }
+    .landing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 0.6rem;
+    }
+    .img-card {
+      border-radius: 0.9rem;
+      border: 1px solid var(--border-soft);
+      background: #020617;
+      overflow: hidden;
+      position: relative;
+      min-height: 90px;
+    }
+    .img-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(1.1) contrast(1.05);
+    }
+    .img-label {
+      position: absolute;
+      left: 0.5rem;
+      bottom: 0.5rem;
+      font-size: 0.72rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: var(--radius-pill);
+      background: rgba(15,23,42,0.8);
+      border: 1px solid rgba(148,163,184,0.5);
+      color: var(--muted);
+    }
+    .btn-row {
+      margin-top: 1.2rem;
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-soft);
+      background: rgba(15,23,42,0.96);
+      color: var(--text);
+      font-size: 0.9rem;
+      padding: 0.55rem 1.4rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 140ms ease;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #020617;
+      border-color: var(--accent);
+      font-weight: 600;
+    }
+    .btn-primary:hover {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+    }
+    .btn-ghost {
+      color: var(--muted);
+      background: transparent;
+    }
+    .btn-ghost:hover {
+      border-color: var(--border);
+      color: var(--text);
+    }
+
+    /* Question view */
+    .question-view {
+      grid-template-columns: minmax(0,1.3fr) minmax(0,1fr);
+      gap: 1.75rem;
+      align-items: start;
+    }
+    .q-main h2 {
+      font-size: 1.2rem;
+      margin-bottom: 0.35rem;
+    }
+    .q-meta {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 0.45rem;
+    }
+    .q-role-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-soft);
+      padding: 0.15rem 0.55rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    .q-text {
+      font-size: 0.95rem;
+      margin-bottom: 0.8rem;
+    }
+    .options {
+      display: grid;
+      gap: 0.4rem;
+      margin-bottom: 0.8rem;
+    }
+    .opt {
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-soft);
+      background: rgba(15,23,42,0.96);
+      padding: 0.55rem 0.7rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+      text-align: left;
+      cursor: pointer;
+      transition: all 130ms ease;
+    }
+    .opt:hover {
+      border-color: var(--border);
+      color: var(--text);
+    }
+    .opt.correct {
+      border-color: var(--good);
+      background: var(--good-soft);
+      color: var(--good);
+    }
+    .opt.wrong {
+      border-color: var(--bad);
+      background: var(--bad-soft);
+      color: var(--bad);
+    }
+    .explanation {
+      display: none;
+      font-size: 0.85rem;
+      border-radius: var(--radius-sm);
+      padding: 0.55rem 0.7rem;
+      background: rgba(15,23,42,0.95);
+      border: 1px solid var(--border-soft);
+      color: var(--muted);
+    }
+    .explanation.show {
+      display: block;
+    }
+    .q-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 0.8rem;
+      flex-wrap: wrap;
+    }
+    .q-progress {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .q-media {
+      display: grid;
+      gap: 0.9rem;
+    }
+    .q-image-card {
+      border-radius: 1rem;
+      border: 1px solid var(--border-soft);
+      background: #020617;
+      overflow: hidden;
+      position: relative;
+      min-height: 150px;
+    }
+    .q-image-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .q-image-label {
+      position: absolute;
+      left: 0.6rem;
+      bottom: 0.6rem;
+      font-size: 0.75rem;
+      padding: 0.16rem 0.5rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148,163,184,0.6);
+      background: rgba(15,23,42,0.85);
+      color: var(--muted);
+    }
+    .q-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* Results view */
+    .results-view {
+      grid-template-columns: minmax(0,1.5fr) minmax(0,1fr);
+      gap: 1.75rem;
+      align-items: center;
+    }
+    .results-main h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.4rem;
+    }
+    .results-main p {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .results-score {
+      margin-top: 0.8rem;
+      font-size: 0.95rem;
+    }
+    .results-score strong {
+      font-size: 1.4rem;
+      color: var(--accent);
+    }
+    .results-grid {
+      margin-top: 1.1rem;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 0.75rem;
+    }
+    .res-card {
+      border-radius: 0.9rem;
+      border: 1px solid var(--border-soft);
+      background: rgba(15,23,42,0.96);
+      padding: 0.8rem 0.9rem;
+      font-size: 0.85rem;
+    }
+    .res-card h3 {
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
+    }
+    .res-card span {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .results-media {
+      border-radius: 1rem;
+      border: 1px solid var(--border-soft);
+      background: #020617;
+      min-height: 180px;
+      padding: 1rem;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .shell-inner { padding: 1.5rem; }
+      header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .landing,
+      .question-view,
+      .results-view { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      body { padding: 1.25rem 0.75rem; }
+      .shell { padding: 1rem; }
+      .shell-inner { padding: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="shell-inner">
+      <header>
+        <div class="title-block">
+          <h1>HTB <span>Job Roles</span> Quiz</h1>
+          <p>
+            Based on your HTB theory: learn what a CISO, Pen Tester, SOC Analyst, Bug Bounty Hunter,
+            and “Recommendations” really mean using quick, focused multiple‑choice questions.
+          </p>
+          <div class="chips">
+            <span class="chip">5 roles</span>
+            <span class="chip">10 questions</span>
+            <span class="chip">Explanations built from HTB content</span>
+          </div>
+        </div>
+        <div class="status">
+          <span>Score</span>
+          <strong id="score-display">0 / 10</strong>
+          <span id="status-sub">Not started</span>
+        </div>
+      </header>
+
+      <!-- Landing view -->
+      <section class="view landing active" id="view-landing">
+        <div class="landing-main">
+          <h2>Start with the big picture</h2>
+          <p>
+            First you’ll see a short illustration of each role, then you’ll answer
+            multiple‑choice questions. At the end, a results page shows your strengths
+            across strategy, offensive, defensive, independent research, and direction.
+          </p>
+          <div class="role-strip">
+            <span class="role-badge">🛡️ CISO – strategy & risk</span>
+            <span class="role-badge">⚔️ Pen Tester – ethical hacking</span>
+            <span class="role-badge">🔭 SOC – monitoring & response</span>
+            <span class="role-badge">🐛 Bug Bounty – independent hunter</span>
+            <span class="role-badge">🧭 Recommendations – your path</span>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="btn-start">Start quiz</button>
+            <button class="btn btn-ghost" id="btn-reset">Reset progress</button>
+          </div>
+        </div>
+        <div class="landing-media">
+          <div class="landing-grid">
+            <div class="img-card">
+              <img src="images/ciso.jpg" alt="CISO illustration (city / shields)">
+              <div class="img-label">CISO</div>
+            </div>
+            <div class="img-card">
+              <img src="images/pentester.jpg" alt="Penetration tester illustration">
+              <div class="img-label">Pen Tester</div>
+            </div>
+            <div class="img-card">
+              <img src="images/soc.jpg" alt="SOC watchtower illustration">
+              <div class="img-label">SOC</div>
+            </div>
+            <div class="img-card">
+              <img src="images/bugbounty.jpg" alt="Bug bounty hunter illustration">
+              <div class="img-label">Bug Bounty</div>
+            </div>
+            <div class="img-card">
+              <img src="images/recs.jpg" alt="Choose your direction illustration">
+              <div class="img-label">Recommendations</div>
+            </div>
+            <div class="img-card">
+              <img src="images/learning.jpg" alt="Learning process illustration">
+              <div class="img-label">Learning Process</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Question view -->
+      <section class="view question-view" id="view-question">
+        <div class="q-main">
+          <div class="q-meta" id="q-meta"></div>
+          <div class="q-role-pill" id="q-role-pill"></div>
+          <h2 id="q-title"></h2>
+          <p class="q-text" id="q-text"></p>
+          <div class="options" id="q-options"></div>
+          <div class="explanation" id="q-expl"></div>
+          <div class="q-footer">
+            <div class="q-progress" id="q-progress"></div>
+            <div class="btn-row">
+              <button class="btn btn-ghost" id="btn-prev">Back</button>
+              <button class="btn btn-primary" id="btn-next">Next</button>
+            </div>
+          </div>
+        </div>
+        <div class="q-media">
+          <div class="q-image-card">
+            <img id="q-img" src="images/ciso.jpg" alt="Role image" />
+            <div class="q-image-label" id="q-img-label">CISO</div>
+          </div>
+          <p class="q-note" id="q-note">
+            Image placeholders: swap these out for your own CISO / Pen Tester / SOC / Bug Bounty / Recommendations art if you like.
+          </p>
+        </div>
+      </section>
+
+      <!-- Results view -->
+      <section class="view results-view" id="view-results">
+        <div class="results-main">
+          <h2>Your HTB roles profile</h2>
+          <p id="results-text">
+            Nice work. Below is a snapshot of how well you understood each role. Use it to decide
+            what to double‑down on next inside HTB Academy.
+          </p>
+          <div class="results-score">
+            Final score: <strong id="results-score">0 / 10</strong>
+          </div>
+          <div class="results-grid">
+            <div class="res-card">
+              <h3>🛡️ CISO – strategy</h3>
+              <span id="res-ciso"></span>
+            </div>
+            <div class="res-card">
+              <h3>⚔️ Pen Tester – offensive</h3>
+              <span id="res-pentester"></span>
+            </div>
+            <div class="res-card">
+              <h3>🔭 SOC – defensive</h3>
+              <span id="res-soc"></span>
+            </div>
+            <div class="res-card">
+              <h3>🐛 Bug Bounty – independent</h3>
+              <span id="res-bugbounty"></span>
+            </div>
+            <div class="res-card">
+              <h3>🧭 Recommendations – direction</h3>
+              <span id="res-recs"></span>
+            </div>
+          </div>
+          <div class="btn-row" style="margin-top:1.2rem;">
+            <button class="btn btn-primary" id="btn-retake">Retake quiz</button>
+            <button class="btn btn-ghost" id="btn-back-home">Back to landing</button>
+          </div>
+        </div>
+        <div class="results-media" id="results-media">
+          You can now map these scores to HTB modules:<br><br>
+          • Strong in offensive? Focus on <em>penetration testing</em> and web modules.<br>
+          • Strong in defensive? Lean into <em>SOC, SIEM, detection, and hunting</em> content.<br>
+          • Uncertain direction? Revisit the Recommendations and the <em>Learning Process</em> module.
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    // --- Question data (based exactly on the HTB-style theory you gave) ---
+    const QUESTIONS = [
+      {
+        id: 'ciso-1',
+        role: 'CISO',
+        roleLabel: 'Chief Information Security Officer',
+        image: 'images/ciso.jpg',
+        imageLabel: 'CISO',
+        note: 'CISO = the protector of the digital city: strategy, risk, and incident leadership.',
+        text: 'Which description best matches the role of a Chief Information Security Officer (CISO)?',
+        options: [
+          'Runs vulnerability scans and patches servers',
+          'Designs security strategies, manages risk, leads incident response, and aligns security with business goals',
+          'Builds web applications and APIs with secure code',
+          'Monitors alerts in a SIEM and escalates incidents'
+        ],
+        correct: 1,
+        explanation: 'The CISO is a senior executive responsible for security strategy, risk management, incident handling, and ensuring security supports the organisation’s objectives.',
+        group: 'ciso'
+      },
+      {
+        id: 'ciso-2',
+        role: 'CISO',
+        roleLabel: 'Chief Information Security Officer',
+        image: 'images/ciso.jpg',
+        imageLabel: 'CISO',
+        note: 'Think “city protector”: citizens (employees), buildings (tech), treasures (data).',
+        text: 'In HTB’s analogy, what does the CISO “guard” in the digital city?',
+        options: [
+          'Only the firewalls and IDS systems',
+          'Only developers and code repositories',
+          'Information assets such as customer data, proprietary information, and financial records',
+          'Only cloud infrastructure and SaaS apps'
+        ],
+        correct: 2,
+        explanation: 'The CISO’s primary purpose is to protect the organisation’s information assets – data and systems – from threats, while enabling the business to operate.',
+        group: 'ciso'
+      },
+      {
+        id: 'pentester-1',
+        role: 'Pen Tester',
+        roleLabel: 'Penetration Tester',
+        image: 'images/pentester.jpg',
+        imageLabel: 'Pen Tester',
+        note: 'A Pen Tester is like a locksmith trying to break in – but with permission.',
+        text: 'What is the primary purpose of a Penetration Tester?',
+        options: [
+          'Monitor logs and respond to alerts',
+          'Simulate real-world attacks to find vulnerabilities before malicious attackers do',
+          'Write security policies and standards',
+          'Operate the SOC and coordinate the team'
+        ],
+        correct: 1,
+        explanation: 'Pen Testers ethically simulate attacks on systems, networks, and applications to identify weaknesses so they can be fixed before real attackers exploit them.',
+        group: 'pentester'
+      },
+      {
+        id: 'pentester-2',
+        role: 'Pen Tester',
+        roleLabel: 'Penetration Tester',
+        image: 'images/pentester.jpg',
+        imageLabel: 'Pen Tester',
+        note: 'They need deep technical skills and clear communication for reports.',
+        text: 'Which combination best describes key skills for a Penetration Tester?',
+        options: [
+          'Marketing, sales, and public speaking',
+          'Project management, budgeting, and HR',
+          'Technical expertise, analytical thinking, creativity, and strong communication skills',
+          'Only coding skills in one programming language'
+        ],
+        correct: 2,
+        explanation: 'Pen Testers need technical depth, analytical thinking, creativity for unusual attack paths, and communication skills to write and explain their findings.',
+        group: 'pentester'
+      },
+      {
+        id: 'soc-1',
+        role: 'SOC',
+        roleLabel: 'Security Operations Center Analyst',
+        image: 'images/soc.jpg',
+        imageLabel: 'SOC',
+        note: 'SOC = the watchtower of a fortified castle watching for threats.',
+        text: 'What is the main purpose of a Security Operations Center (SOC)?',
+        options: [
+          'Develop new web applications for customers',
+          'Store backups of all company data',
+          'Continuously monitor, detect, analyse, and respond to cyber threats and security incidents',
+          'Run penetration tests on all external systems'
+        ],
+        correct: 2,
+        explanation: 'The SOC is the central unit that monitors, detects, analyses, and responds to threats, acting as the first line of defence for the digital environment.',
+        group: 'soc'
+      },
+      {
+        id: 'soc-2',
+        role: 'SOC',
+        roleLabel: 'Security Operations Center Analyst',
+        image: 'images/soc.jpg',
+        imageLabel: 'SOC',
+        note: 'Tier 1, Tier 2, Tier 3 = increasing depth and criticality.',
+        text: 'According to the HTB description, what does a Tier 1 SOC analyst primarily do?',
+        options: [
+          'Handle initial alert triage and basic threat analysis',
+          'Lead the most critical responses and advanced threat analysis',
+          'Manage the SOC team and all procedures',
+          'Design new security architectures for the whole organisation'
+        ],
+        correct: 0,
+        explanation: 'Tier 1 analysts handle initial alert triage and basic threat analysis. More complex cases escalate to Tier 2 and Tier 3, with the SOC Manager overseeing operations.',
+        group: 'soc'
+      },
+      {
+        id: 'bug-1',
+        role: 'Bug Bounty',
+        roleLabel: 'Bug Bounty Hunter',
+        image: 'images/bugbounty.jpg',
+        imageLabel: 'Bug Bounty',
+        note: 'Bug bounty hunters are independent security researchers working within program scope.',
+        text: 'What best describes a bug bounty program?',
+        options: [
+          'An internal training course for new SOC analysts',
+          'A program that pays ransomware groups to stop attacking',
+          'A structured initiative where organisations reward external researchers for responsibly disclosing vulnerabilities',
+          'A tool used to automatically patch all vulnerabilities'
+        ],
+        correct: 2,
+        explanation: 'Bug bounty programs encourage external ethical hackers to report vulnerabilities responsibly in exchange for recognition and often financial rewards.',
+        group: 'bugbounty'
+      },
+      {
+        id: 'bug-2',
+        role: 'Bug Bounty',
+        roleLabel: 'Bug Bounty Hunter',
+        image: 'images/bugbounty.jpg',
+        imageLabel: 'Bug Bounty',
+        note: 'Scope, rules of engagement, and reward structure are key pieces.',
+        text: 'In a typical bug bounty program, how are monetary rewards usually determined?',
+        options: [
+          'Same reward for every bug submitted',
+          'Only based on how quickly a report is filed',
+          'Based on the severity and potential impact of the discovered vulnerability',
+          'Only based on the number of bugs reported per month'
+        ],
+        correct: 2,
+        explanation: 'Rewards are generally tiered by severity and impact: more critical vulnerabilities with higher potential damage earn higher payouts.',
+        group: 'bugbounty'
+      },
+      {
+        id: 'recs-1',
+        role: 'Recs',
+        roleLabel: 'Recommendations',
+        image: 'images/recs.jpg',
+        imageLabel: 'Recommendations',
+        note: 'HTB emphasises there is no “wrong” direction – interest matters.',
+        text: 'According to the HTB recommendations you pasted, what is the most important factor when choosing a cybersecurity direction?',
+        options: [
+          'Always start with Blue Team work',
+          'Always start with Red Team work',
+          'Choosing what genuinely interests you and defining your personal “why”',
+          'Picking whichever role has the highest starting salary'
+        ],
+        correct: 2,
+        explanation: 'HTB stresses that there is no wrong direction; you should follow what appeals to you most and know why you’re doing it.',
+        group: 'recs'
+      },
+      {
+        id: 'recs-2',
+        role: 'Recs',
+        roleLabel: 'Recommendations',
+        image: 'images/learning.jpg',
+        imageLabel: 'Learning Process',
+        note: 'Blue & Red reinforce each other; the Learning Process module accelerates everything.',
+        text: 'Why does HTB recommend understanding both how attacks work and how defences work?',
+        options: [
+          'Because regulations require it for all jobs',
+          'Because it is impossible to get a job otherwise',
+          'Because Blue Team needs to know attacks to defend, and Red Team needs to know defences to bypass them, leading naturally toward Purple Team experience',
+          'Because it eliminates the need for any further learning'
+        ],
+        correct: 2,
+        explanation: 'Knowing both offence and defence makes you far more effective: defenders understand attacker methods, and attackers understand how defences behave. This naturally leads into a Purple Team mindset.',
+        group: 'recs'
+      }
+    ];
+
+    let currentIndex = 0;
+    let score = 0;
+    const answers = {}; // id -> true/false
+
+    const viewLanding = document.getElementById('view-landing');
+    const viewQuestion = document.getElementById('view-question');
+    const viewResults = document.getElementById('view-results');
+
+    const scoreDisplay = document.getElementById('score-display');
+    const statusSub = document.getElementById('status-sub');
+
+    const qMeta = document.getElementById('q-meta');
+    const qRolePill = document.getElementById('q-role-pill');
+    const qTitle = document.getElementById('q-title');
+    const qText = document.getElementById('q-text');
+    const qOptions = document.getElementById('q-options');
+    const qExpl = document.getElementById('q-expl');
+    const qProgress = document.getElementById('q-progress');
+    const qImg = document.getElementById('q-img');
+    const qImgLabel = document.getElementById('q-img-label');
+    const qNote = document.getElementById('q-note');
+
+    const btnStart = document.getElementById('btn-start');
+    const btnReset = document.getElementById('btn-reset');
+    const btnPrev = document.getElementById('btn-prev');
+    const btnNext = document.getElementById('btn-next');
+
+    const resultsScore = document.getElementById('results-score');
+    const resCiso = document.getElementById('res-ciso');
+    const resPent = document.getElementById('res-pentester');
+    const resSoc = document.getElementById('res-soc');
+    const resBug = document.getElementById('res-bugbounty');
+    const resRecs = document.getElementById('res-recs');
+    const btnRetake = document.getElementById('btn-retake');
+    const btnBackHome = document.getElementById('btn-back-home');
+
+    function showView(name) {
+      viewLanding.classList.remove('active');
+      viewQuestion.classList.remove('active');
+      viewResults.classList.remove('active');
+      if (name === 'landing') viewLanding.classList.add('active');
+      if (name === 'question') viewQuestion.classList.add('active');
+      if (name === 'results') viewResults.classList.add('active');
+    }
+
+    function updateScoreUI() {
+      scoreDisplay.textContent = `${score} / ${QUESTIONS.length}`;
+      if (score === 0 && currentIndex === 0) {
+        statusSub.textContent = 'Not started';
+      } else if (currentIndex < QUESTIONS.length) {
+        statusSub.textContent = 'In progress';
+      } else {
+        statusSub.textContent = 'Completed';
+      }
+    }
+
+    function renderQuestion() {
+      const q = QUESTIONS[currentIndex];
+      qMeta.textContent = `Question ${currentIndex + 1} of ${QUESTIONS.length}`;
+      qRolePill.textContent = `${q.role} · ${q.roleLabel}`;
+      qTitle.textContent = q.roleLabel;
+      qText.textContent = q.text;
+      qImg.src = q.image;
+      qImg.alt = q.roleLabel;
+      qImgLabel.textContent = q.imageLabel;
+      qNote.textContent = q.note;
+
+      qProgress.textContent = `Role: ${q.role}  |  Group: ${q.group.toUpperCase()}`;
+      qExpl.classList.remove('show');
+      qExpl.textContent = '';
+
+      qOptions.innerHTML = '';
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'opt';
+        btn.textContent = opt;
+        btn.addEventListener('click', () => handleAnswer(idx));
+        qOptions.appendChild(btn);
+      });
+
+      btnPrev.disabled = currentIndex === 0;
+      btnNext.textContent = currentIndex === QUESTIONS.length - 1 ? 'Finish' : 'Next';
+    }
+
+    function handleAnswer(idx) {
+      const q = QUESTIONS[currentIndex];
+      const opts = qOptions.querySelectorAll('.opt');
+      opts.forEach((o, i) => {
+        o.disabled = true;
+        o.classList.remove('correct', 'wrong');
+        if (i === q.correct) {
+          o.classList.add('correct');
+        }
+      });
+      const chosenBtn = opts[idx];
+      if (idx !== q.correct) {
+        chosenBtn.classList.add('wrong');
+        answers[q.id] = false;
+      } else {
+        answers[q.id] = true;
+        if (!q._countedCorrect) {
+          score += 1;
+          q._countedCorrect = true;
+        }
+      }
+      qExpl.textContent = q.explanation;
+      qExpl.classList.add('show');
+      updateScoreUI();
+    }
+
+    function goNext() {
+      if (currentIndex < QUESTIONS.length - 1) {
+        currentIndex++;
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function goPrev() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        renderQuestion();
+      }
+    }
+
+    function resetAll() {
+      score = 0;
+      currentIndex = 0;
+      Object.keys(answers).forEach(k => delete answers[k]);
+      QUESTIONS.forEach(q => { delete q._countedCorrect; });
+      updateScoreUI();
+    }
+
+    function showResults() {
+      showView('results');
+      resultsScore.textContent = `${score} / ${QUESTIONS.length}`;
+
+      function countGroup(group) {
+        const qs = QUESTIONS.filter(q => q.group === group);
+        const correct = qs.filter(q => answers[q.id]).length;
+        return `${correct} / ${qs.length}`;
+      }
+
+      resCiso.textContent = countGroup('ciso');
+      resPent.textContent = countGroup('pentester');
+      resSoc.textContent = countGroup('soc');
+      resBug.textContent = countGroup('bugbounty');
+      resRecs.textContent = countGroup('recs');
+
+      if (score <= 4) {
+        document.getElementById('results-text').textContent =
+          'You’ve got the outline. A second pass will make the differences between roles really clear. Focus on where you missed questions.';
+      } else if (score <= 8) {
+        document.getElementById('results-text').textContent =
+          'Nice! You understand most of the big ideas behind these roles. Tighten the weak areas and map them to HTB modules.';
+      } else {
+        document.getElementById('results-text').textContent =
+          'Excellent. You’ve got a strong grasp of the CISO, Pen Tester, SOC, Bug Bounty, and Recommendations ideas in this HTB section.';
+      }
+
+      updateScoreUI();
+    }
+
+    // Event wiring
+    btnStart.addEventListener('click', () => {
+      resetAll();
+      showView('question');
+      renderQuestion();
+    });
+
+    btnReset.addEventListener('click', () => {
+      resetAll();
+      showView('landing');
+    });
+
+    btnPrev.addEventListener('click', goPrev);
+    btnNext.addEventListener('click', goNext);
+
+    btnRetake.addEventListener('click', () => {
+      resetAll();
+      showView('question');
+      renderQuestion();
+    });
+
+    btnBackHome.addEventListener('click', () => {
+      showView('landing');
+    });
+
+    // Initial state
+    updateScoreUI();
+  </script>
+</body>
+</html>

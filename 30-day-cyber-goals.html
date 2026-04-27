@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB Junior Cybersecurity Analyst - 30 Day Practice Roadmap</title>
+  <meta name="description" content="A responsive 30-day HTB Junior Cybersecurity Analyst roadmap with daily module targets, practice tasks, labs, and deliverables." />
+  <meta name="theme-color" content="#01696f" />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=zodiak@400,700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      color-scheme: light dark;
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+      --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+      --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem;
+      --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-10: 2.5rem;
+      --space-12: 3rem; --space-16: 4rem;
+      --content-default: 1100px;
+      --font-display: 'Zodiak', Georgia, serif;
+      --font-body: 'Satoshi', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    :root[data-theme="light"] {
+      --color-bg: #f7f6f2;
+      --color-surface: #f9f8f5;
+      --color-surface-2: #fbfbf9;
+      --color-surface-offset: #edeae5;
+      --color-border: #d4d1ca;
+      --color-text: #28251d;
+      --color-text-muted: #66645f;
+      --color-text-inverse: #f9f8f4;
+      --color-primary: #01696f;
+      --color-primary-hover: #0c4e54;
+      --color-success: #437a22;
+      --color-orange: #da7101;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    :root[data-theme="dark"] {
+      --color-bg: #101010;
+      --color-surface: #181818;
+      --color-surface-2: #202020;
+      --color-surface-offset: #262626;
+      --color-border: #333333;
+      --color-text: #f0f0f0;
+      --color-text-muted: #b3b3b3;
+      --color-text-inverse: #141414;
+      --color-primary: #4f98a3;
+      --color-primary-hover: #227f8b;
+      --color-success: #6daa45;
+      --color-orange: #fdab43;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+      --shadow-md: 0 8px 24px rgba(0,0,0,0.6);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      line-height: 1.6;
+      color: var(--color-text);
+      background: var(--color-bg);
+    }
+    a { text-decoration: none; color: inherit; }
+    button { font: inherit; border: 0; background: none; color: inherit; cursor: pointer; }
+    :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; border-radius: 4px; }
+
+    .container { width: min(calc(100% - 2rem), var(--content-default)); margin-inline: auto; }
+
+    .header {
+      position: sticky; top: 0; z-index: 10;
+      background: color-mix(in srgb, var(--color-bg) 90%, transparent);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .header-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: var(--space-4) 0; gap: var(--space-4);
+    }
+    .brand { display: flex; align-items: center; gap: var(--space-3); }
+    .brand-mark {
+      width: 40px; height: 40px; border-radius: 14px;
+      display: grid; place-items: center;
+      background: rgba(1,105,111,0.12); color: var(--color-primary);
+    }
+    .brand h1 { font-family: var(--font-display); font-size: var(--text-lg); }
+    .brand p { font-size: var(--text-xs); color: var(--color-text-muted); }
+
+    .btn {
+      min-height: 40px;
+      padding: 0 1.2rem;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.08);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: var(--text-sm);
+      background: var(--color-surface);
+    }
+    .btn-primary {
+      background: var(--color-primary);
+      color: var(--color-text-inverse);
+      border-color: transparent;
+    }
+
+    .hero { padding: var(--space-12) 0 var(--space-10); }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0,1.4fr) minmax(0,1fr);
+      gap: var(--space-8);
+      align-items: flex-start;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: var(--text-xs); letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--color-primary);
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(1,105,111,0.12);
+      margin-bottom: var(--space-4);
+    }
+    .hero h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 4vw, 3.8rem);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      margin-bottom: var(--space-4);
+    }
+    .hero p { max-width: 60ch; color: var(--color-text-muted); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
+    .hero-panel {
+      padding: var(--space-5);
+      border-radius: 1rem;
+      background: var(--color-surface);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--color-border);
+      display: grid; gap: var(--space-4);
+    }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: var(--space-3);
+    }
+    .stat {
+      padding: var(--space-4);
+      border-radius: 0.75rem;
+      background: var(--color-surface-2);
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+    .stat strong { display: block; font-size: var(--text-xl); line-height: 1; margin-bottom: 0.25rem; }
+    .stat span { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .muted { color: var(--color-text-muted); }
+
+    main section { padding: var(--space-8) 0; }
+    .section-head {
+      display: flex; justify-content: space-between;
+      gap: var(--space-4); align-items: flex-end;
+      margin-bottom: var(--space-5);
+    }
+    .section-head h3 {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+    }
+    .section-head p { max-width: 60ch; color: var(--color-text-muted); }
+
+    .weeks {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: var(--space-4);
+    }
+    .week-card {
+      padding: var(--space-5);
+      border-radius: 1rem;
+      background: var(--color-surface);
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+    .week-card .tag {
+      display: inline-flex;
+      font-size: var(--text-xs);
+      padding: 0.1rem 0.5rem;
+      border-radius: 999px;
+      background: rgba(1,105,111,0.12);
+      color: var(--color-primary);
+      margin-bottom: var(--space-3);
+    }
+    .week-card h4 { font-size: var(--text-lg); margin-bottom: 0.4rem; }
+    .week-card p { color: var(--color-text-muted); }
+    .week-card ul {
+      margin-top: var(--space-4);
+      list-style: none;
+      display: grid;
+      gap: 0.5rem;
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+    .week-card li {
+      position: relative;
+      padding-left: 1.1rem;
+    }
+    .week-card li::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 999px;
+      background: var(--color-primary);
+      position: absolute;
+      left: 0; top: 0.55rem;
+    }
+
+    .timeline { display: grid; gap: var(--space-4); }
+    .day-card {
+      padding: var(--space-5);
+      border-radius: 1rem;
+      background: var(--color-surface);
+      border: 1px solid rgba(0,0,0,0.06);
+      display: grid;
+      grid-template-columns: 120px minmax(0,1fr);
+      gap: var(--space-4);
+    }
+    .day-pill {
+      align-self: flex-start;
+      padding: 0.8rem;
+      border-radius: 0.9rem;
+      background: var(--color-surface-2);
+      border: 1px solid rgba(0,0,0,0.06);
+      text-align: center;
+      display: grid;
+      gap: 0.35rem;
+    }
+    .day-pill strong { display: block; font-size: var(--text-lg); line-height: 1; }
+    .day-pill span { font-size: var(--text-xs); color: var(--color-text-muted); }
+
+    .status-pill {
+      margin-top: 0.1rem;
+      font-size: var(--text-xs);
+      padding: 0.1rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.15);
+      background: var(--color-surface-offset);
+      color: var(--color-text-muted);
+    }
+    .status-pill[data-state="in-progress"] {
+      border-color: var(--color-orange);
+      background: rgba(218,113,1,0.16);
+      color: var(--color-orange);
+    }
+    .status-pill[data-state="done"] {
+      border-color: var(--color-success);
+      background: rgba(67,122,34,0.16);
+      color: var(--color-success);
+    }
+
+    .day-card h4 { font-size: var(--text-lg); margin-bottom: 0.4rem; }
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.6rem;
+    }
+    .pill {
+      font-size: var(--text-xs);
+      padding: 0.1rem 0.55rem;
+      border-radius: 999px;
+      background: var(--color-surface-offset);
+      color: var(--color-text-muted);
+    }
+
+    .day-card p.muted {
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+      margin-bottom: 0.6rem;
+    }
+    .day-card ul {
+      list-style: none;
+      display: grid;
+      gap: 0.4rem;
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin-bottom: 0.6rem;
+    }
+    .day-card li {
+      position: relative;
+      padding-left: 1.1rem;
+    }
+    .day-card li::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 999px;
+      background: var(--color-primary);
+      position: absolute;
+      left: 0; top: 0.55rem;
+    }
+
+    .checklist-inline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 0.6rem;
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+    .checklist-inline label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      cursor: pointer;
+    }
+    .checklist-inline input[type="checkbox"] {
+      width: 14px;
+      height: 14px;
+      accent-color: var(--color-primary);
+    }
+
+    .footer {
+      padding: var(--space-10) 0 var(--space-12);
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+    .footer-box {
+      padding: var(--space-5);
+      border-radius: 1rem;
+      background: var(--color-surface);
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .weeks { grid-template-columns: 1fr; }
+      .day-card { grid-template-columns: 1fr; }
+      .section-head { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 640px) {
+      .header-inner { flex-direction: column; align-items: flex-start; }
+      .hero { padding-top: var(--space-8); }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 16.5V7.5L12 4l7 3.5v9L12 20z"></path>
+            <path d="M12 8v8"></path>
+          </svg>
+        </div>
+        <div>
+          <h1>HTB Junior Analyst</h1>
+          <p>30-day module and practice roadmap</p>
+        </div>
+      </div>
+      <button class="btn" id="theme-toggle" type="button">
+        <span id="theme-toggle-label">Dark mode</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">HTB Academy · Junior Cybersecurity Analyst</div>
+          <h2>Know exactly what to do every day.</h2>
+          <p>
+            This roadmap ties each day to a specific HTB module, concrete practice tasks, a clear lab focus, and a
+            small deliverable you can reuse later in your portfolio or interviews.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#roadmap">Jump to 30-day plan</a>
+          </div>
+        </div>
+        <aside class="hero-panel">
+          <div class="stat-grid">
+            <div class="stat"><strong>30</strong><span>Days of structured work</span></div>
+            <div class="stat"><strong>20</strong><span>HTB-style modules</span></div>
+            <div class="stat"><strong>3–5h</strong><span>Average per day</span></div>
+            <div class="stat"><strong>1</strong><span>Deliverable every day</span></div>
+          </div>
+          <p class="muted">
+            Use this as a living dashboard: at the end of each day, make sure you can tick off the module sections,
+            the practice, the lab, and the deliverable.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h3>Weekly focus</h3>
+            <p>
+              The 30 days are grouped into four phases: foundations, networking and methodology, offensive web and
+              enumeration, and finally defensive monitoring, detections, and threat hunting.
+            </p>
+          </div>
+        </div>
+        <div class="weeks">
+          <article class="week-card">
+            <div class="tag">Week 1 · Days 1–7</div>
+            <h4>Foundations and operating systems</h4>
+            <p>Information security basics, learning workflow, Linux, and Windows.</p>
+            <ul>
+              <li>Build your note‑taking and problem‑solving system.</li>
+              <li>Get comfortable in Linux and Windows without worrying about syntax.</li>
+              <li>Produce your first command and permissions cheat sheets.</li>
+            </ul>
+          </article>
+          <article class="week-card">
+            <div class="tag">Week 2 · Days 8–14</div>
+            <h4>Networking, AD, and pentest flow</h4>
+            <p>Networking fundamentals, Active Directory basics, and full pentest methodology with Nmap.</p>
+            <ul>
+              <li>Understand how systems talk: IP, DNS, routing, services, ports.</li>
+              <li>Learn AD structure and attacker enumeration thinking.</li>
+              <li>Develop repeatable recon and scanning habits with Nmap.</li>
+            </ul>
+          </article>
+          <article class="week-card">
+            <div class="tag">Week 3 · Days 15–21</div>
+            <h4>Web, proxies, and recon</h4>
+            <p>Vulnerability assessment, HTTP, web applications, Burp, and full web recon workflows.</p>
+            <ul>
+              <li>See how vulnerabilities relate to real severity and impact.</li>
+              <li>Understand HTTP traffic and how web apps are structured.</li>
+              <li>Practice end‑to‑end web enumeration on a target.</li>
+            </ul>
+          </article>
+          <article class="week-card">
+            <div class="tag">Week 4 · Days 22–30</div>
+            <h4>Ops, SIEM, detections, and hunting</h4>
+            <p>File transfers, JavaScript analysis, SIEM, detection engineering, hunting, and portfolio prep.</p>
+            <ul>
+              <li>Learn how attacker behavior shows up in logs.</li>
+              <li>Write and validate basic detection rules and hunt scenarios.</li>
+              <li>Turn your work into interview‑ready portfolio material.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="roadmap">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h3>30‑day module and practice plan</h3>
+            <p>
+              Each card is one day. Do the module sections, complete the practice, finish the lab focus,
+              and produce the deliverable. If something takes longer, finish it properly and compress on easier days.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline">
+          <!-- Day 1 -->
+          <article class="day-card" data-day="1">
+            <div class="day-pill">
+              <strong>Day 1</strong>
+              <span>InfoSec</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Introduction to Information Security</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 1–8: overview, threats, malware, APTs, security teams</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Set up a notes folder with sections: Commands, Concepts, Mistakes, Daily Logs.</li>
+                <li>Create a daily log template (Date, Module, What I learned, What broke, Next steps).</li>
+                <li>Write three security principles from this module in your own words.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> No lab – orientation and study system setup.</p>
+              <p class="muted"><strong>Deliverable:</strong> One‑page “study system” document with folder structure and log template.</p>
+            </div>
+          </article>
+
+          <!-- Day 2 -->
+          <article class="day-card" data-day="2">
+            <div class="day-pill">
+              <strong>Day 2</strong>
+              <span>Method</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Learning Process</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 1–10: learning methodology, documentation, handling frustration</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Create your “stuck protocol” (enumeration checklist before using hints).</li>
+                <li>Write your personal learning cycle: Try → Fail → Document → Understand → Retry.</li>
+                <li>Start a command cheat sheet with sections for Linux, Windows, Networking, and Web.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> Complete the Learning Process module exercises.</p>
+              <p class="muted"><strong>Deliverable:</strong> Personal problem‑solving workflow document.</p>
+            </div>
+          </article>
+
+          <!-- Day 3 -->
+          <article class="day-card" data-day="3">
+            <div class="day-pill">
+              <strong>Day 3</strong>
+              <span>Linux</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Linux Fundamentals – navigation & files</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 1–8: shell basics, pathing, file operations</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Run 20+ navigation/file commands (cd, ls, mkdir, rm, mv, cat, less) without copy‑paste.</li>
+                <li>Create a temp directory, make 5 files, move/rename/delete them; repeat this three times.</li>
+                <li>Write examples of absolute vs relative paths and explain the difference.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> Linux navigation and file manipulation exercises.</p>
+              <p class="muted"><strong>Deliverable:</strong> Linux basics cheat sheet with ~15 daily‑use commands.</p>
+            </div>
+          </article>
+
+          <!-- Day 4 -->
+          <article class="day-card" data-day="4">
+            <div class="day-pill">
+              <strong>Day 4</strong>
+              <span>Linux</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Linux Fundamentals – permissions & users</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 9–16: chmod, chown, groups, packages</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Create test files and use chmod 755, 644, 600; observe what each allows/blocks.</li>
+                <li>Write permissions like <code>rwxr-xr-x</code> and explain them in plain English.</li>
+                <li>Review <code>/etc/passwd</code> and <code>/etc/group</code> and note what looks sensitive.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> Linux permissions and user management exercises.</p>
+              <p class="muted"><strong>Deliverable:</strong> Permissions reference card with octal and symbolic notation.</p>
+            </div>
+          </article>
+
+          <!-- Day 5 -->
+          <article class="day-card" data-day="5">
+            <div class="day-pill">
+              <strong>Day 5</strong>
+              <span>Linux</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Linux Fundamentals – processes & text tools</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 17–24: ps, top, systemctl, grep, netstat/ss</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Run <code>ps aux</code>, pick 5 processes, and write what they do and why they matter.</li>
+                <li>Use <code>grep</code> with <code>-i</code>, <code>-r</code>, and <code>-v</code> on simple log files.</li>
+                <li>Use <code>netstat</code> or <code>ss</code> to list listening ports and identify three services.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> Process management and text manipulation exercises.</p>
+              <p class="muted"><strong>Deliverable:</strong> Process and networking commands cheat sheet.</p>
+            </div>
+          </article>
+
+          <!-- Day 6 -->
+          <article class="day-card" data-day="6">
+            <div class="day-pill">
+              <strong>Day 6</strong>
+              <span>Linux</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Linux Fundamentals – find & scripting</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 25–30: find, env vars, tiny script, review</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Use <code>find</code> to locate files by name, size, and modification time.</li>
+                <li>Write a simple bash script that automates a small enumeration or file task.</li>
+                <li>Review all Linux commands from Days 3–6 and pick the 10 you’ll use most.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> Linux fundamentals final exercises and knowledge checks.</p>
+              <p class="muted"><strong>Deliverable:</strong> Personal top‑20 Linux commands list with usage examples.</p>
+            </div>
+          </article>
+
+          <!-- Day 7 -->
+          <article class="day-card" data-day="7">
+            <div class="day-pill">
+              <strong>Day 7</strong>
+              <span>Win</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Windows Fundamentals</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 1–14: Windows layout, CMD, PowerShell, users, services</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Navigate the Windows file system using both CMD and PowerShell and compare workflows.</li>
+                <li>Practice CMD: <code>dir</code>, <code>cd</code>, <code>type</code>, <code>find</code>, <code>tasklist</code>, <code>netstat</code>.</li>
+                <li>Practice PowerShell: <code>Get-ChildItem</code>, <code>Get-Process</code>, <code>Get-Service</code>, <code>Get-NetTCPConnection</code>.</li>
+                <li>Write differences between CMD and PowerShell for the same tasks.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> Windows fundamentals module exercises.</p>
+              <p class="muted"><strong>Deliverable:</strong> CMD vs PowerShell comparison sheet for 10 common tasks.</p>
+            </div>
+          </article>
+
+          <!-- Day 8 -->
+          <article class="day-card" data-day="8">
+            <div class="day-pill">
+              <strong>Day 8</strong>
+              <span>Net</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Introduction to Networking – core concepts</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 1–9: OSI model, TCP/IP, IP addressing, subnetting</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Draw the OSI model and list at least 2 protocols per layer.</li>
+                <li>Practice subnetting with 192.168.1.0/24 (network, broadcast, usable range).</li>
+                <li>Explain the TCP 3‑way handshake in your own words with a small diagram.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> Networking fundamentals exercises.</p>
+              <p class="muted"><strong>Deliverable:</strong> Networking cheat sheet: OSI model, TCP vs UDP, and core ports.</p>
+            </div>
+          </article>
+
+          <!-- Day 9 -->
+          <article class="day-card" data-day="9">
+            <div class="day-pill">
+              <strong>Day 9</strong>
+              <span>Net</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Introduction to Networking – protocols & ports</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 10–18: DNS, DHCP, routing, HTTP, FTP, SMB, SSH</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Create a port reference for at least 15 common services (FTP 21, SSH 22, DNS 53, HTTP 80, HTTPS 443, SMB 445, RDP 3389, etc.).</li>
+                <li>Use <code>nslookup</code> or <code>dig</code> to perform DNS lookups and record what you see.</li>
+                <li>Describe a basic HTTP client‑server interaction, from request to response.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> Protocol identification and DNS exercises.</p>
+              <p class="muted"><strong>Deliverable:</strong> Common ports and services reference card.</p>
+            </div>
+          </article>
+
+          <!-- Day 10 -->
+          <article class="day-card" data-day="10">
+            <div class="day-pill">
+              <strong>Day 10</strong>
+              <span>AD</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Introduction to Active Directory – structure</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 1–8: forest, domains, OUs, users, groups, GPOs</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Draw an AD hierarchy: Forest → Domain → OU → Users/Computers.</li>
+                <li>List high‑value objects: Domain Admins, Enterprise Admins, krbtgt, Domain Controllers.</li>
+                <li>Write why attackers target AD and why defenders care about it so much.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> AD structure and terminology exercises.</p>
+              <p class="muted"><strong>Deliverable:</strong> AD concept map with key objects and relationships.</p>
+            </div>
+          </article>
+
+                    <!-- Day 11 -->
+          <article class="day-card" data-day="11">
+            <div class="day-pill">
+              <strong>Day 11</strong>
+              <span>AD</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Introduction to Active Directory – enumeration & attacks</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 9–16: AD enumeration, LDAP, Kerberos basics, attack surface</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Walk through Kerberos authentication flow (TGT, TGS, service ticket) and sketch it.</li>
+                <li>Practice AD enumeration commands: <code>net user</code>, <code>net group</code>, <code>nltest</code> in a lab context.</li>
+                <li>List what attackers look for first: privileged accounts, misconfigurations, trust relationships.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> AD enumeration exercises in the module.</p>
+              <p class="muted"><strong>Deliverable:</strong> AD attack surface notes with enumeration commands and high‑value targets.</p>
+            </div>
+          </article>
+
+          <!-- Day 12 -->
+          <article class="day-card" data-day="12">
+            <div class="day-pill">
+              <strong>Day 12</strong>
+              <span>Pentest</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Getting Started – pentest methodology</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 1–10: engagement lifecycle, scope, methodology</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Write your 6‑step pentest workflow: Scope → Recon → Enum → Exploit → Post‑exploit → Report.</li>
+                <li>Define your personal rules of engagement: always enumerate first, document everything, verify impact.</li>
+                <li>Design a note‑taking template: Target info, Services found, Vulns, Exploitation steps, Evidence.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> Pentest methodology exercises in the module.</p>
+              <p class="muted"><strong>Deliverable:</strong> Personal pentest methodology document with workflow and note templates.</p>
+            </div>
+          </article>
+
+          <!-- Day 13 -->
+          <article class="day-card" data-day="13">
+            <div class="day-pill">
+              <strong>Day 13</strong>
+              <span>Pentest</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Getting Started – apply workflow to an easy box</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 11–20: enumeration, exploitation, post‑exploitation, reporting</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Apply your workflow on one easy Starting Point/box (e.g., Meow or similar).</li>
+                <li>Document each step: enumeration, findings, access gained, post‑access actions, evidence.</li>
+                <li>Write a short explanation of your findings for a non‑technical audience.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> Getting Started labs + one easy Starting Point machine.</p>
+              <p class="muted"><strong>Deliverable:</strong> Full write‑up of the box using your methodology template.</p>
+            </div>
+          </article>
+
+          <!-- Day 14 -->
+          <article class="day-card" data-day="14">
+            <div class="day-pill">
+              <strong>Day 14</strong>
+              <span>Nmap</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Network Enumeration with Nmap – scan types & output</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 1–14: scan types, service detection, scripts, timing</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Run <code>nmap -sC -sV -p- -oA target &lt;IP&gt;</code> against a lab target.</li>
+                <li>Compare <code>-sS</code>, <code>-sT</code>, <code>-sU</code>, and <code>-sV</code> flags and note what they change.</li>
+                <li>Interpret output: open/closed/filtered ports, version detection, script results, and what to do next.</li>
+                <li>Save three Nmap templates: quick scan, full TCP scan, and targeted ports scan.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> Nmap enumeration exercises on HTB targets.</p>
+              <p class="muted"><strong>Deliverable:</strong> Nmap cheat sheet with scan types, flags, and output interpretation notes.</p>
+            </div>
+          </article>
+
+          <!-- Day 15 -->
+          <article class="day-card" data-day="15">
+            <div class="day-pill">
+              <strong>Day 15</strong>
+              <span>Vuln</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Vulnerability Assessment – severity & prioritisation</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 1–12: vuln scanning, CVE/CVSS, false positives</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Review CVSS basics: what Base, Temporal, and Environmental scores represent.</li>
+                <li>Practice distinguishing vulnerability vs exploitability vs business impact in example scenarios.</li>
+                <li>Rank a small list of sample findings into Critical/High/Medium/Low with short justifications.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> Vulnerability assessment exercises in HTB Academy.</p>
+              <p class="muted"><strong>Deliverable:</strong> Vulnerability assessment template with severity ranking and remediation priority.</p>
+            </div>
+          </article>
+
+          <!-- Day 16 -->
+          <article class="day-card" data-day="16">
+            <div class="day-pill">
+              <strong>Day 16</strong>
+              <span>HTTP</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Web Requests – HTTP methods & headers</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 1–10: HTTP verbs, headers, cookies, status codes</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Use <code>curl</code> to send GET and POST requests, including custom headers and data.</li>
+                <li>Capture HTTP traffic in browser DevTools and inspect requests/responses and cookies.</li>
+                <li>Write down examples of key headers: User‑Agent, Cookie, Authorization, Content‑Type.</li>
+                <li>Memorise core status codes: 200, 301/302, 401, 403, 404, 500 with one‑line meanings.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> HTTP requests exercises using curl and browser tools.</p>
+              <p class="muted"><strong>Deliverable:</strong> HTTP reference card with methods, headers, status codes, and curl examples.</p>
+            </div>
+          </article>
+
+          <!-- Day 17 -->
+          <article class="day-card" data-day="17">
+            <div class="day-pill">
+              <strong>Day 17</strong>
+              <span>Web</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Introduction to Web Applications – architecture & OWASP</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 1–9: web stack, auth, sessions, OWASP Top 10 intro</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Map a simple web app: client → web server → app server → database.</li>
+                <li>Identify all user input points: URLs, forms, cookies, headers, hidden fields.</li>
+                <li>Read through OWASP Top 10 and note where each could appear in your mapped app.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> Web application fundamentals exercises.</p>
+              <p class="muted"><strong>Deliverable:</strong> Web app attack surface map with input vectors and OWASP notes.</p>
+            </div>
+          </article>
+
+          <!-- Day 18 -->
+          <article class="day-card" data-day="18">
+            <div class="day-pill">
+              <strong>Day 18</strong>
+              <span>Web</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Introduction to Web Applications – common vulns</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 10–18: SQLi, XSS, traversal, file upload issues</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Identify injection points in a sample app and try basic SQLi payloads like <code>' OR 1=1--</code>.</li>
+                <li>Test simple reflected XSS payloads like <code>&lt;script&gt;alert(1)&lt;/script&gt;</code> in lab environments.</li>
+                <li>Practice path traversal payloads such as <code>../../../etc/passwd</code> in safe labs.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> Web vulnerability identification exercises.</p>
+              <p class="muted"><strong>Deliverable:</strong> Web vulns quick reference with example payloads for SQLi, XSS, traversal.</p>
+            </div>
+          </article>
+
+          <!-- Day 19 -->
+          <article class="day-card" data-day="19">
+            <div class="day-pill">
+              <strong>Day 19</strong>
+              <span>Burp</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Using Web Proxies – Burp Suite workflow</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 1–12: proxy setup, intercept, repeater, intruder, decoder</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Configure Burp with your browser (127.0.0.1:8080) and intercept traffic.</li>
+                <li>Modify one request parameter in Intercept or Repeater and observe the response difference.</li>
+                <li>Use Intruder for a simple fuzz (e.g., usernames or parameters) on a practice target.</li>
+                <li>Use Decoder to decode Base64 or URL‑encoded data you capture.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> Burp Suite exercises on HTB web challenges.</p>
+              <p class="muted"><strong>Deliverable:</strong> Burp workflow guide with screenshots of Intercept, Repeater, Intruder.</p>
+            </div>
+          </article>
+
+          <!-- Day 20 -->
+          <article class="day-card" data-day="20">
+            <div class="day-pill">
+              <strong>Day 20</strong>
+              <span>Recon</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Information Gathering – passive web recon</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 1–8: WHOIS, DNS, subdomains, tech fingerprinting</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Perform WHOIS and DNS lookups on a practice domain and record findings.</li>
+                <li>Run subdomain enumeration (e.g., subfinder/sublist3r or an online tool) on a safe target.</li>
+                <li>Use Wappalyzer or builtwith.com to identify technologies used by a site.</li>
+                <li>Check <code>robots.txt</code>, <code>sitemap.xml</code>, and the Wayback Machine for extra clues.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> Passive information gathering exercises.</p>
+              <p class="muted"><strong>Deliverable:</strong> Web recon checklist with tools and techniques for each phase.</p>
+            </div>
+          </article>
+
+          <!-- Day 21 -->
+          <article class="day-card" data-day="21">
+            <div class="day-pill">
+              <strong>Day 21</strong>
+              <span>Recon</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Information Gathering – active recon & review</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 9–16: dir fuzzing, parameters, APIs, recap</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Use <code>gobuster</code> or <code>ffuf</code> to brute‑force directories/files on a lab web target.</li>
+                <li>Enumerate API endpoints and experiment with different HTTP methods where safe.</li>
+                <li>Build a complete recon workflow: passive first, then active, then analysis.</li>
+                <li>Review your notes from Days 14–20 and refine your enumeration strategy.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> Active enumeration exercises on a practice target.</p>
+              <p class="muted"><strong>Deliverable:</strong> Web enumeration report on a practice target with documented findings.</p>
+            </div>
+          </article>
+
+          <!-- Day 22 -->
+          <article class="day-card" data-day="22">
+            <div class="day-pill">
+              <strong>Day 22</strong>
+              <span>Files</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>File Transfers – ops & detection</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 1–14: wget, curl, SCP, FTP, SMB, HTTP server, exfil</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Practice Linux transfers: <code>wget</code>, <code>curl</code>, <code>python3 -m http.server</code>, <code>nc</code>.</li>
+                <li>Practice Windows transfers: <code>certutil</code>, PowerShell download, BitsAdmin on a lab host.</li>
+                <li>Move a file between two lab systems using at least two different methods.</li>
+                <li>Write how each method might appear in logs or be detected by defenders.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> File transfer exercises across Linux and Windows.</p>
+              <p class="muted"><strong>Deliverable:</strong> File transfer cheat sheet for Linux/Windows plus detection notes.</p>
+            </div>
+          </article>
+
+          <!-- Day 23 -->
+          <article class="day-card" data-day="23">
+            <div class="day-pill">
+              <strong>Day 23</strong>
+              <span>JS</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>JavaScript Deobfuscation – script analysis</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 1–8: JS basics, obfuscation, deobfuscation tools, suspicious logic</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Use a JS beautifier/deobfuscation tool on sample obfuscated scripts from the module.</li>
+                <li>Look for suspicious patterns: <code>eval()</code>, <code>document.write()</code>, strange encoded strings, external calls.</li>
+                <li>Write a plain‑language explanation of what one deobfuscated script actually does.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> JavaScript analysis exercises in the module.</p>
+              <p class="muted"><strong>Deliverable:</strong> JS analysis template: Beautify → Decode → Identify calls → Explain behavior.</p>
+            </div>
+          </article>
+
+          <!-- Day 24 -->
+          <article class="day-card" data-day="24">
+            <div class="day-pill">
+              <strong>Day 24</strong>
+              <span>SIEM</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Security Monitoring & SIEM Fundamentals – log sources</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 1–13: log sources, event collection, SIEM architecture, correlation</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>List common log sources: Windows Event Logs, Syslog, web server logs, firewall logs.</li>
+                <li>Learn key Windows Event IDs: 4624 (logon), 4625 (failed logon), 4672 (special privileges), 4688 (process creation).</li>
+                <li>Describe what makes an alert “good”: actionable, contextualised, and low false‑positive rate.</li>
+                <li>Compare raw log entries vs SIEM‑parsed events for clarity.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> SIEM fundamentals exercises.</p>
+              <p class="muted"><strong>Deliverable:</strong> SIEM concepts doc with log sources, key event IDs, and alert design principles.</p>
+            </div>
+          </article>
+
+          <!-- Day 25 -->
+          <article class="day-card" data-day="25">
+            <div class="day-pill">
+              <strong>Day 25</strong>
+              <span>SIEM</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Security Monitoring & SIEM Fundamentals – triage & investigation</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 14–25: alert triage, investigation workflow, evidence collection</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Practice alert triage workflow: Receive → Validate → Investigate → Conclude → Escalate/Close.</li>
+                <li>Identify signs of suspicious behavior: off‑hours access, privilege escalation, unusual lateral movement.</li>
+                <li>Write a short investigation note for one sample alert including evidence used.</li>
+                <li>Sketch a simple triage decision tree for common alert types.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> SIEM investigation exercises on sample alerts.</p>
+              <p class="muted"><strong>Deliverable:</strong> Alert triage template with investigation steps and evidence fields.</p>
+            </div>
+          </article>
+
+          <!-- Day 26 -->
+          <article class="day-card" data-day="26">
+            <div class="day-pill">
+              <strong>Day 26</strong>
+              <span>Detect</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Detection Engineering – rule logic</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 1–10: detection logic, rule writing, behavior‑based detection</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Break down detection rules into: trigger condition, context, severity, false‑positive mitigation.</li>
+                <li>Draft simple rules for brute‑force logons, privilege escalation, and suspicious command execution.</li>
+                <li>Think through trade‑offs between sensitivity and noise for each rule.</li>
+                <li>List reasons detections fail: evasion, misconfiguration, missing telemetry.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> Detection rule writing exercises.</p>
+              <p class="muted"><strong>Deliverable:</strong> Sample detection rules with descriptions of logic and expected results.</p>
+            </div>
+          </article>
+
+          <!-- Day 27 -->
+          <article class="day-card" data-day="27">
+            <div class="day-pill">
+              <strong>Day 27</strong>
+              <span>Detect</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Detection Engineering – validation & coverage</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 11–20: testing detections, coverage mapping, improvement loop</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Validate your sample rules using test scenarios or lab activity.</li>
+                <li>Roughly map some rules to MITRE ATT&amp;CK techniques to see what you cover.</li>
+                <li>Create a tiny “playbook” for triaging three different alert categories.</li>
+                <li>Review what you’ve learned about detection engineering and note gaps.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> Detection validation exercises.</p>
+              <p class="muted"><strong>Deliverable:</strong> Detection validation report with test results and improvement ideas.</p>
+            </div>
+          </article>
+
+          <!-- Day 28 -->
+          <article class="day-card" data-day="28">
+            <div class="day-pill">
+              <strong>Day 28</strong>
+              <span>Hunt</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Threat Hunting – methodology & Elastic basics</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 1–14: hunting process, hypotheses, Elastic/Kibana basics</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Write the hunt flow: Hypothesis → Query → Analyze → Conclude → Detect/Respond.</li>
+                <li>Create three simple hypotheses (unauthorised access, data exfil, privilege abuse).</li>
+                <li>Practice basic KQL queries in an Elastic‑style environment or simulator.</li>
+                <li>Explore data in a Discover/Dashboard‑style view and note interesting patterns.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> Threat hunting fundamentals and Elastic basics exercises.</p>
+              <p class="muted"><strong>Deliverable:</strong> Hunting framework doc with hypothesis template and example queries.</p>
+            </div>
+          </article>
+
+          <!-- Day 29 -->
+          <article class="day-card" data-day="29">
+            <div class="day-pill">
+              <strong>Day 29</strong>
+              <span>Hunt</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Threat Hunting – full scenarios & review</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Sections 15–28: advanced queries, scenarios, indicators, documentation</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Run 2–3 complete hunt scenarios from hypothesis to conclusion in a lab dataset.</li>
+                <li>Document what you searched, what you found, what it means, and recommended actions.</li>
+                <li>Review SIEM and detection notes together and highlight terms useful for interviews.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> Full threat hunt exercises in an Elastic‑style environment.</p>
+              <p class="muted"><strong>Deliverable:</strong> Threat hunt report with hypothesis, methodology, findings, and recommendations.</p>
+            </div>
+          </article>
+
+          <!-- Day 30 -->
+          <article class="day-card" data-day="30">
+            <div class="day-pill">
+              <strong>Day 30</strong>
+              <span>Wrap</span>
+              <div class="status-pill" data-status>Not started</div>
+            </div>
+            <div>
+              <h4>Review & Portfolio Preparation</h4>
+              <div class="pill-row">
+                <span class="pill">Module</span>
+                <span class="pill">Path review, weak spots, portfolio compilation</span>
+              </div>
+              <p class="muted">Practice focus for this day:</p>
+              <ul>
+                <li>Review your notes for all 30 days and list the 10 concepts you feel strongest in.</li>
+                <li>Identify 3–5 weak areas and spend focused time revisiting them.</li>
+                <li>Compile your portfolio: write‑ups, detection rules, hunt reports, cheat sheets, templates.</li>
+                <li>Draft CV/LinkedIn bullets from your best labs and detections.</li>
+              </ul>
+              <div class="checklist-inline">
+                <label><input type="checkbox" class="day-check" data-role="sections">Sections done</label>
+                <label><input type="checkbox" class="day-check" data-role="practice">Practice done</label>
+                <label><input type="checkbox" class="day-check" data-role="lab">Lab done</label>
+              </div>
+              <p class="muted"><strong>Lab focus:</strong> Finish any remaining knowledge checks and final exercises.</p>
+              <p class="muted"><strong>Deliverable:</strong> Portfolio package + 3–5 CV/LinkedIn bullets based on this path.</p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="footer-box">
+          <p>
+            Edit this file to add direct links to HTB Academy modules or to tweak tasks. Use it as your personal
+            dashboard while you complete the Junior Cybersecurity Analyst path.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>HTB Junior Cybersecurity Analyst · 30‑day roadmap</p>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      const root = document.documentElement;
+      const toggle = document.getElementById('theme-toggle');
+      const label = document.getElementById('theme-toggle-label');
+
+      const getPreferredTheme = () => {
+        const stored = localStorage.getItem('theme');
+        if (stored === 'light' || stored === 'dark') return stored;
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      };
+
+      const setTheme = (theme) => {
+        root.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        label.textContent = theme === 'dark' ? 'Light mode' : 'Dark mode';
+      };
+
+      setTheme(getPreferredTheme());
+
+      toggle.addEventListener('click', () => {
+        const current = root.getAttribute('data-theme') || 'light';
+        setTheme(current === 'light' ? 'dark' : 'light');
+      });
+    })();
+
+    (function() {
+      const cards = document.querySelectorAll('.day-card');
+
+      cards.forEach(card => {
+        const checks = card.querySelectorAll('.day-check');
+        const statusEl = card.querySelector('[data-status]');
+        if (!statusEl || !checks.length) return;
+
+        const updateStatus = () => {
+          const checkedCount = Array.from(checks).filter(c => c.checked).length;
+          if (checkedCount === 0) {
+            statusEl.textContent = 'Not started';
+            statusEl.removeAttribute('data-state');
+          } else if (checkedCount < checks.length) {
+            statusEl.textContent = 'In progress';
+            statusEl.setAttribute('data-state', 'in-progress');
+          } else {
+            statusEl.textContent = 'Done';
+            statusEl.setAttribute('data-state', 'done');
+          }
+        };
+
+        const day = card.getAttribute('data-day');
+        checks.forEach(chk => {
+          const key = `day${day}-${chk.dataset.role}`;
+          const saved = localStorage.getItem(key);
+          if (saved === '1') chk.checked = true;
+        });
+        updateStatus();
+
+        checks.forEach(chk => {
+          chk.addEventListener('change', () => {
+            const key = `day${day}-${chk.dataset.role}`;
+            localStorage.setItem(key, chk.checked ? '1' : '0');
+            updateStatus();
+          });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

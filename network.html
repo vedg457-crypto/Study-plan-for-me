@@ -2,332 +2,825 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Gamified Networking Foundations</title>
+  <title>Network Quest: Gamified Introduction to Networks</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background:#0b1020; color:#f4f4f4; }
-    header { background:#141b33; padding:20px; text-align:center; border-bottom:2px solid #3b82f6; }
-    h1,h2,h3 { color:#3b82f6; }
-    main { max-width:1000px; margin:20px auto 40px; padding:0 15px 40px; }
-    .xp-bar-wrapper { background:#1f2937; border-radius:8px; padding:10px; margin:15px 0 25px; }
-    .xp-label { display:flex; justify-content:space-between; font-size:0.9rem; margin-bottom:6px; }
-    .xp-bar { width:100%; background:#111827; border-radius:999px; overflow:hidden; height:16px; }
-    .xp-fill { height:100%; width:0%; background:linear-gradient(90deg,#22c55e,#a3e635); transition:width 0.4s ease; }
-    .layout { display:flex; gap:20px; flex-wrap:wrap; }
-    .column { flex:1 1 280px; }
-    section.card { background:#111827; border-radius:10px; padding:16px 18px 18px; margin-bottom:16px; border:1px solid #1f2937; }
-    .tag { display:inline-block; padding:2px 8px; border-radius:999px; font-size:0.7rem; background:#1f2937; color:#9ca3af; margin-bottom:8px; text-transform:uppercase; letter-spacing:1px; }
-    ul { padding-left:18px; }
-    li { margin-bottom:6px; }
-    .quest-list li { cursor:pointer; }
-    .quest-list li.completed { text-decoration:line-through; color:#9ca3af; }
-    .checkpoint { border-left:3px solid #3b82f6; padding-left:10px; margin:10px 0; font-size:0.9rem; }
-    details { background:#020617; border-radius:8px; padding:8px 10px 10px; margin-top:8px; border:1px solid #1f2937; }
-    summary { cursor:pointer; font-weight:bold; color:#e5e7eb; }
-    .question { margin-top:8px; font-size:0.9rem; }
-    .score-box { font-size:0.9rem; margin-top:10px; color:#a5b4fc; }
-    .btn-row { margin-top:10px; display:flex; gap:10px; flex-wrap:wrap; }
-    button { background:#3b82f6; color:white; border:none; padding:6px 10px; border-radius:6px; cursor:pointer; font-size:0.85rem; }
-    button.secondary { background:#111827; border:1px solid #374151; }
-    button:disabled { opacity:0.4; cursor:default; }
-    .grid-2 { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:12px; }
-    .badge-row { margin-top:10px; display:flex; flex-wrap:wrap; gap:6px; }
-    .badge { border-radius:999px; border:1px solid #4b5563; padding:4px 8px; font-size:0.75rem; background:#020617; }
-    .hidden { display:none; }
-    a { color:#38bdf8; }
-    footer { text-align:center; font-size:0.75rem; color:#6b7280; padding:10px 0 20px; }
-    @media (max-width:700px){ header h1 { font-size:1.4rem; } }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #050816;
+      color: #f7fafc;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: radial-gradient(circle at top, #1a365d, #050816 55%);
+      padding: 20px 16px 16px;
+      text-align: center;
+      border-bottom: 1px solid #2d3748;
+    }
+    h1, h2, h3 {
+      margin: 0.4em 0;
+    }
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+    .flex {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .card {
+      background: #111827;
+      border: 1px solid #2d3748;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 10px 0;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    }
+    .card h2, .card h3 {
+      color: #e2e8f0;
+    }
+    .pill {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      margin-right: 6px;
+      background: #1a202c;
+      color: #a0aec0;
+      border: 1px solid #2d3748;
+    }
+    .xp-bar-container {
+      background: #1a202c;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid #2d3748;
+      margin-top: 8px;
+      height: 16px;
+    }
+    .xp-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #38b2ac, #63b3ed);
+      transition: width 0.5s ease;
+    }
+    .xp-label {
+      font-size: 13px;
+      margin-top: 4px;
+      color: #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+    }
+    button {
+      background: linear-gradient(135deg, #3182ce, #38b2ac);
+      border: none;
+      color: #f7fafc;
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 13px;
+      margin: 4px 4px 0 0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+    button:hover {
+      filter: brightness(1.05);
+    }
+    button:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid #4a5568;
+      color: #e2e8f0;
+      box-shadow: none;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+    }
+    .stat-box {
+      background: #111827;
+      border-radius: 10px;
+      padding: 10px 12px;
+      border: 1px solid #2d3748;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: #a0aec0;
+    }
+    .stat-value {
+      font-size: 18px;
+      margin-top: 2px;
+      color: #edf2f7;
+    }
+    .badge-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+    .badge {
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 11px;
+      border: 1px solid #4a5568;
+      background: rgba(56, 178, 172, 0.1);
+      color: #9ae6b4;
+    }
+    .badge.locked {
+      background: rgba(45,55,72,0.8);
+      color: #a0aec0;
+      border-style: dashed;
+    }
+    .quest-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+    .quest-list li {
+      margin: 8px 0;
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: #0b1120;
+      border: 1px solid #2d3748;
+      font-size: 14px;
+    }
+    .quest-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+    }
+    .quest-title {
+      font-weight: 600;
+      color: #e2e8f0;
+    }
+    .quest-xp {
+      color: #9ae6b4;
+      font-size: 12px;
+    }
+    .quest-body {
+      margin-top: 4px;
+      color: #cbd5f5;
+      font-size: 13px;
+    }
+    .quest-body span.key {
+      color: #fbd38d;
+    }
+    .quest-body span.important {
+      color: #90cdf4;
+    }
+    .checkpoint {
+      border-left: 3px solid #38b2ac;
+      padding-left: 10px;
+      margin: 8px 0;
+      font-size: 13px;
+      color: #e2e8f0;
+    }
+    .grid-two {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 13px;
+    }
+    th, td {
+      border: 1px solid #2d3748;
+      padding: 6px 8px;
+      text-align: left;
+    }
+    th {
+      background: #1f2937;
+      color: #e2e8f0;
+    }
+    .question-block {
+      border-radius: 8px;
+      border: 1px solid #4a5568;
+      padding: 8px 10px;
+      margin: 6px 0;
+      font-size: 13px;
+      background: #050b18;
+    }
+    .question-block strong {
+      color: #f6e05e;
+    }
+    .hidden {
+      display: none;
+    }
+    .token {
+      font-family: "Fira Code", Consolas, monospace;
+      background: #1a202c;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+      border: 1px solid #2d3748;
+    }
+    footer {
+      text-align: center;
+      padding: 12px;
+      font-size: 12px;
+      color: #a0aec0;
+      border-top: 1px solid #2d3748;
+      margin-top: 10px;
+    }
+    @media (max-width: 600px) {
+      header {
+        padding: 16px 10px 10px;
+      }
+      main {
+        padding: 10px;
+      }
+    }
   </style>
 </head>
 <body>
 <header>
-  <h1>Networking Guild: LAN &amp; WAN Quest</h1>
-  <p>Earn XP by clearing quests about networks, models, protocols, and devices.</p>
-  <div class="xp-bar-wrapper">
-    <div class="xp-label">
-      <span>Level <span id="level">1</span> • Apprentice NetRunner</span>
-      <span><span id="xp">0</span>/100 XP</span>
-    </div>
-    <div class="xp-bar"><div class="xp-fill" id="xpFill"></div></div>
+  <h1>Network Quest: Foundations of Networking</h1>
+  <p style="max-width: 700px; margin: 6px auto 0; font-size: 14px; color: #cbd5f5;">
+    Progress through missions, earn XP, and unlock badges as you master LANs, WANs, OSI, TCP/IP, protocols, transmission, and network components.
+  </p>
+
+  <div class="xp-bar-container" aria-label="Player XP">
+    <div id="xpBar" class="xp-bar"></div>
+  </div>
+  <div class="xp-label">
+    <span id="xpText">XP: 0 / 600</span>
+    <span id="levelText">Level 1: Network Newbie</span>
   </div>
 </header>
 
 <main>
-  <div class="layout">
-    <div class="column">
-
-      <section class="card">
-        <div class="tag">Quest Log</div>
-        <h2>Chapter 1: Network Basics</h2>
-        <ul class="quest-list" id="chapter1">
-          <li data-xp="10">Define <strong>network</strong>, <strong>node</strong>, and <strong>link</strong> in your own words.</li>
-          <li data-xp="10">Give one real-world analogy for data sharing (not the friends-in-a-room example).</li>
-          <li data-xp="15">List two reasons why networks are important for cyber security.</li>
-          <li data-xp="15">Compare LAN and WAN by size, speed, and ownership.</li>
-        </ul>
-        <div class="checkpoint">When you feel confident, click each quest you have completed after answering on paper or aloud.</div>
-      </section>
-
-      <section class="card">
-        <div class="tag">Quest Log</div>
-        <h2>Chapter 2: LANs &amp; WANs in Action</h2>
-        <ul class="quest-list" id="chapter2">
-          <li data-xp="15">Sketch (on paper) your home LAN and label: end devices, router, modem, ISP.</li>
-          <li data-xp="10">Explain how your LAN talks to your ISP's WAN step-by-step.</li>
-          <li data-xp="10">Describe a business scenario where multiple office LANs use a WAN.</li>
-          <li data-xp="15">Explain why WANs are usually slower and more complex than LANs.</li>
-        </ul>
-      </section>
-
-      <section class="card">
-        <div class="tag">Mini Quiz</div>
-        <h2>Checkpoint: LAN vs WAN</h2>
-        <details>
-          <summary>Question 1</summary>
-          <div class="question">
-            A company has three offices in different cities. Inside each office, which type of network connects the employees' PCs? What type of network connects the three offices together?
-          </div>
-        </details>
-        <details>
-          <summary>Question 2</summary>
-          <div class="question">
-            Your home Wi-Fi feels faster than downloading from a server across the world. Which network type is which here, and why is one generally faster?
-          </div>
-        </details>
-        <p class="score-box">Answer these out loud or in your notes, then mark related quests as complete to gain XP.</p>
-      </section>
-
-    </div>
-
-    <div class="column">
-
-      <section class="card">
-        <div class="tag">Quest Log</div>
-        <h2>Chapter 3: OSI &amp; TCP/IP</h2>
-        <ul class="quest-list" id="chapter3">
-          <li data-xp="10">Write down the 7 OSI layers in order and one keyword per layer.</li>
-          <li data-xp="10">Match 3 devices or protocols to their OSI layers (e.g. switch, router, HTTP).</li>
-          <li data-xp="15">Explain the journey of a file from Application to Physical layer when sending it.</li>
-          <li data-xp="15">Map each TCP/IP layer to its OSI counterpart layers.</li>
-        </ul>
-      </section>
-
-      <section class="card">
-        <div class="tag">Mini Quiz</div>
-        <h2>Checkpoint: Models</h2>
-        <details>
-          <summary>Question 3</summary>
-          <div class="question">
-            When you visit a website, at which TCP/IP layer does HTTP live, and which layer is responsible for routing your packets across the internet?
-          </div>
-        </details>
-        <details>
-          <summary>Question 4</summary>
-          <div class="question">
-            Which OSI layer is responsible for logical addressing and path selection, and which common device works there?
-          </div>
-        </details>
-      </section>
-
-      <section class="card">
-        <div class="tag">Quest Log</div>
-        <h2>Chapter 4: Protocol Arena</h2>
-        <ul class="quest-list" id="chapter4">
-          <li data-xp="10">For HTTP, FTP, and SMTP, describe what each is used for and one example.</li>
-          <li data-xp="10">Explain the difference between TCP and UDP in terms of reliability vs speed.</li>
-          <li data-xp="10">Choose an app you use (e.g. streaming, gaming, email) and justify whether it likely uses TCP or UDP.</li>
-          <li data-xp="10">Describe how IP helps packets move between networks.</li>
-        </ul>
-      </section>
-
-    </div>
-  </div>
-
+  <!-- PLAYER PANEL -->
   <section class="card">
-    <div class="tag">Quest Log</div>
-    <h2>Chapter 5: Transmission &amp; Media</h2>
-    <div class="grid-2">
-      <div>
-        <h3>Transmission Types &amp; Modes</h3>
-        <ul class="quest-list" id="chapter5a">
-          <li data-xp="10">Explain the difference between analog and digital transmission with one example of each.</li>
-          <li data-xp="10">Define simplex, half-duplex, and full-duplex and give a device example for each.</li>
-        </ul>
+    <div class="flex" style="align-items: flex-start;">
+      <div style="flex: 2 1 260px;">
+        <h2>Your Player Sheet</h2>
+        <span class="pill">Role: Junior NetSec Explorer</span>
+        <span class="pill">Mode: Solo</span>
+        <p style="margin-top: 8px; font-size: 13px; color:#cbd5f5;">
+          Complete quests in each chapter. When you feel you “could explain it to a friend”, click <b>Claim XP</b>.
+          If you get stuck, use the <span class="token">Checkpoint Questions</span> as self-tests.
+        </p>
+        <button type="button" class="btn-ghost" onclick="toggleAllChapters()">Toggle all chapters</button>
       </div>
-      <div>
-        <h3>Media Hunt</h3>
-        <ul class="quest-list" id="chapter5b">
-          <li data-xp="10">List 3 wired media and 3 wireless media and a typical use-case for each.</li>
-          <li data-xp="10">On paper, draw a small network using at least two different media types and label them.</li>
-        </ul>
+      <div style="flex: 1 1 220px;">
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-label">Total XP</div>
+            <div class="stat-value" id="statXp">0</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Unlocked Chapters</div>
+            <div class="stat-value" id="statChapters">1 / 7</div>
+          </div>
+        </div>
+        <div class="badge-row">
+          <span class="badge locked" id="badgeLayers">OSI/ TCP/IP Adept</span>
+          <span class="badge locked" id="badgeProtocols">Protocol Wizard</span>
+          <span class="badge locked" id="badgeInfra">Infrastructure Architect</span>
+        </div>
       </div>
     </div>
+  </section>
+
+  <!-- CHAPTER 1: NETWORK BASICS -->
+  <section class="card">
+    <h2>Chapter 1: Network Basics (Nodes, Links, LAN vs WAN)</h2>
+    <div class="checkpoint">
+      Learning goal: Explain in your own words what a network is and clearly distinguish a LAN from a WAN.
+    </div>
+
+    <ul class="quest-list">
+      >
+        <div class="quest-header">
+          <span class="quest-title">Quest 1.1 – Spot the Nodes</span>
+          <span class="quest-xp">+40 XP</span>
+        </div>
+        <div class="quest-body">
+          In your own room, list at least <span class="important">4 devices</span> that could be <span class="key">nodes</span>
+          (endpoints) in a network: laptop, phone, printer, smart TV, etc.
+          For each, note whether it normally uses <span class="key">wired</span> or <span class="key">wireless</span> links.
+        </div>
+      </li>
+      >
+        <div class="quest-header">
+          <span class="quest-title">Quest 1.2 – Friend Chat Analogy</span>
+          <span class="quest-xp">+40 XP</span>
+        </div>
+        <div class="quest-body">
+          Use the “friends chatting in a room” analogy:
+          map <span class="key">person</span> → node, <span class="key">speaking/listening</span> → link,
+          <span class="key">conversation</span> → data. Now create a <span class="important">second analogy</span> 
+          from your own life (e.g., classroom, WhatsApp group) that maps to these three concepts.
+        </div>
+      </li>
+      >
+        <div class="quest-header">
+          <span class="quest-title">Quest 1.3 – LAN vs WAN Field Report</span>
+          <span class="quest-xp">+80 XP</span>
+        </div>
+        <div class="quest-body">
+          Draw (on paper is fine) your <span class="important">home LAN</span> and the path to the
+          <span class="key">ISP WAN</span>. Label: devices, router, modem, ISP cloud, and “Internet”.
+          Then write two bullet points: why a LAN is <span class="key">faster</span> and
+          <span class="key">easier to manage</span> than the WAN.
+        </div>
+      </li>
+    </ul>
+
     <details>
-      <summary>Checkpoint: Transmission</summary>
-      <div class="question">
-        If you are making a long-distance, high-speed backbone connection for an ISP, which transmission medium do you choose and why? If you are connecting your phone to your home router, which medium is more convenient and why?
+      <summary class="btn-ghost" style="display:inline-block;margin-top:8px;cursor:pointer;">
+        Checkpoint Questions (Self‑test)
+      </summary>
+      <div class="question-block">
+        <strong>CQ1:</strong> If your phone sends a photo to a friend on the other side of the world,
+        which parts of the journey use your <span class="key">LAN</span> and which use one or more
+        <span class="key">WANs</span>?
+      </div>
+      <div class="question-block">
+        <strong>CQ2:</strong> Why is ownership a useful way to distinguish a LAN from a WAN, not just size?
       </div>
     </details>
+
+    <button type="button" onclick="claimXP(1,160)">Claim XP for Chapter 1</button>
   </section>
 
+  <!-- CHAPTER 2: OSI MODEL -->
   <section class="card">
-    <div class="tag">Quest Log</div>
-    <h2>Chapter 6: Devices &amp; Components</h2>
-    <div class="grid-2">
+    <h2>Chapter 2: OSI Model – 7‑Layer Tower</h2>
+    <div class="checkpoint">
+      Learning goal: Be able to name the 7 layers in order and give one concrete example for each.
+    </div>
+
+    <div class="grid-two">
       <div>
-        <h3>Device Roles</h3>
-        <ul class="quest-list" id="chapter6a">
-          <li data-xp="10">Describe what an end device is and give 3 examples.</li>
-          <li data-xp="10">Explain how intermediary devices (switch, router, access point, modem) help traffic move.</li>
-          <li data-xp="10">Describe what a NIC is and why the MAC address matters.</li>
-          <li data-xp="10">Compare a hub and a switch in terms of efficiency and OSI layer.</li>
+        <h3>Layer Cards</h3>
+        <table>
+          <tr><th>Layer</th><th>Nickname</th></tr>
+          <tr><td>7 – Application</td><td>What user apps use (HTTP, SMTP)</td></tr>
+          <tr><td>6 – Presentation</td><td>Translate, encrypt, compress</td></tr>
+          <tr><td>5 – Session</td><td>Start, keep, end conversations</td></tr>
+          <tr><td>4 – Transport</td><td>Reliable segments (TCP/UDP)</td></tr>
+          <tr><td>3 – Network</td><td>IP addressing, routing</td></tr>
+          <tr><td>2 – Data Link</td><td>Frames, MAC addresses</td></tr>
+          <tr><td>1 – Physical</td><td>Bits on the wire / air</td></tr>
+        </table>
+      </div>
+      <div>
+        <h3>Mini‑Game: Layer Walkthrough</h3>
+        <ol style="font-size:13px; padding-left:18px; margin:0;">
+          >Imagine sending a file to a friend.</l/li>
+          >Write one sentence for what happens at each layer, from 7 down to 1.</l/li>
+          >Keep the sentences short, but mention at least once: <span class="key">segments</span>, <span class="key">packets</span>, <span class="key">frames</span>, and <span class="key">bits</span>.</li>
+        </ol>
+      </div>
+    </div>
+
+    <ul class="quest-list">
+      >
+        <div class="quest-header">
+          <span class="quest-title">Quest 2.1 – Memory Ladder</span>
+          <span class="quest-xp">+60 XP</span>
+        </div>
+        <div class="quest-body">
+          Create your own mnemonic for the 7 layers top‑down.
+          Do <span class="important">not</span> use any you’ve seen online. The weirder, the better, as long as you remember it.
+        </div>
+      </li>
+      >
+        <div class="quest-header">
+          <span class="quest-title">Quest 2.2 – Device to Layer Mapping</span>
+          <span class="quest-xp">+60 XP</span>
+        </div>
+        <div class="quest-body">
+          Map each device to the <span class="key">main OSI layer</span> it works at:
+          <span class="important">hub</span>, <span class="important">switch</span>, <span class="important">router</span>,
+          <span class="important">NIC</span>, <span class="important">browser</span>.
+          Explain each mapping in one sentence.
+        </div>
+      </li>
+    </ul>
+
+    <details>
+      <summary class="btn-ghost" style="display:inline-block;margin-top:8px;cursor:pointer;">
+        Checkpoint Questions (Self‑test)
+      </summary>
+      <div class="question-block">
+        <strong>CQ3:</strong> Why is it useful for security people to separate “what protocol is used” (Layer 7)
+        from “how it is routed” (Layer 3)?
+      </div>
+      <div class="question-block">
+        <strong>CQ4:</strong> In the file‑sending example, what exactly changes when you go from Transport to Network to Data Link?
+      </div>
+    </details>
+
+    <button type="button" onclick="claimXP(2,120)">Claim XP for Chapter 2</button>
+  </section>
+
+  <!-- CHAPTER 3: TCP/IP MODEL -->
+  <section class="card">
+    <h2>Chapter 3: TCP/IP Model – Practical Stack</h2>
+    <div class="checkpoint">
+      Learning goal: Relate each TCP/IP layer to the OSI layers and describe what happens when you open a website.
+    </div>
+
+    <table>
+      <tr><th>TCP/IP Layer</th><th>Main Job</th><th>Rough OSI Match</th></tr>
+      <tr><td>Application</td><td>HTTP, FTP, SMTP, DNS</td><td>OSI 5–7</td></tr>
+      <tr><td>Transport</td><td>TCP/UDP, ports, reliability</td><td>OSI 4</td></tr>
+      <tr><td>Internet</td><td>IP addressing, routing</td><td>OSI 3</td></tr>
+      <tr><td>Link</td><td>Media access, framing, physical</td><td>OSI 1–2</td></tr>
+    </table>
+
+    <ul class="quest-list">
+      >
+        <div class="quest-header">
+          <span class="quest-title">Quest 3.1 – HTTP Journey</span>
+          <span class="quest-xp">+50 XP</span>
+        </div>
+        <div class="quest-body">
+          Describe the journey of an HTTP request from your browser to a web server using only the 4 TCP/IP layers.
+          Mention at least one <span class="key">protocol</span> per layer where relevant.
+        </div>
+      </li>
+      >
+        <div class="quest-header">
+          <span class="quest-title">Quest 3.2 – OSI vs TCP/IP Mapping</span>
+          <span class="quest-xp">+50 XP</span>
+        </div>
+        <div class="quest-body">
+          Create a two‑column list: left is OSI layers, right is the corresponding TCP/IP layer.
+          Highlight which OSI layers are “merged” in TCP/IP and why that makes implementation simpler.
+        </div>
+      </li>
+    </ul>
+
+    <details>
+      <summary class="btn-ghost" style="display:inline-block;margin-top:8px;cursor:pointer;">
+        Checkpoint Question (Self‑test)
+      </summary>
+      <div class="question-block">
+        <strong>CQ5:</strong> Why is the TCP/IP model considered more “practical” even though it has fewer layers than OSI?
+      </div>
+    </details>
+
+    <button type="button" onclick="claimXP(3,100)">Claim XP for Chapter 3</button>
+  </section>
+
+  <!-- CHAPTER 4: PROTOCOLS -->
+  <section class="card">
+    <h2>Chapter 4: Protocol Arena – Rules of Communication</h2>
+    <div class="checkpoint">
+      Learning goal: Identify the purpose and OSI/TCP/IP layer of common protocols like HTTP, FTP, SMTP, TCP, UDP, and IP.
+    </div>
+
+    <table>
+      <tr><th>Protocol</th><th>Main Purpose</th><th>Layer (OSI/TCP-IP)</th></tr>
+      <tr><td>HTTP/HTTPS</td><td>Web page transfer</td><td>App / Application</td></tr>
+      <tr><td>FTP</td><td>File transfer</td><td>App / Application</td></tr>
+      <tr><td>SMTP</td><td>Email sending</td><td>App / Application</td></tr>
+      <tr><td>TCP</td><td>Reliable transport</td><td>Transport / Transport</td></tr>
+      <tr><td>UDP</td><td>Fast, no guarantee</td><td>Transport / Transport</td></tr>
+      <tr><td>IP</td><td>Addressing & routing</td><td>Network / Internet</td></tr>
+    </table>
+
+    <ul class="quest-list">
+      >
+        <div class="quest-header">
+          <span class="quest-title">Quest 4.1 – Protocol Match Game</span>
+          <span class="quest-xp">+60 XP</span>
+        </div>
+        <div class="quest-body">
+          For each protocol above, write a one‑line example sentence:
+          “When I <span class="key">do X</span> on my computer, protocol <span class="key">Y</span> is involved because <span class="key">Z</span>.”
+        </div>
+      </li>
+      >
+        <div class="quest-header">
+          <span class="quest-title">Quest 4.2 – TCP vs UDP Showdown</span>
+          <span class="quest-xp">+60 XP</span>
+        </div>
+        <div class="quest-body">
+          Pick one application that should use <span class="important">TCP</span> and one that should use
+          <span class="important">UDP</span>. For each, justify your choice in two bullet points,
+          mentioning <span class="key">reliability</span>, <span class="key">speed</span>,
+          and <span class="key">tolerance for loss</span>.
+        </div>
+      </li>
+    </ul>
+
+    <details>
+      <summary class="btn-ghost" style="display:inline-block;margin-top:8px;cursor:pointer;">
+        Checkpoint Question (Self‑test)
+      </summary>
+      <div class="question-block">
+        <strong>CQ6:</strong> Why does HTTP depend on TCP, and what might break if it instead used UDP?
+      </div>
+    </details>
+
+    <button type="button" onclick="claimXP(4,120)">Claim XP for Chapter 4</button>
+  </section>
+
+  <!-- CHAPTER 5: TRANSMISSION -->
+  <section class="card">
+    <h2>Chapter 5: Transmission Trials – Signals, Modes, Media</h2>
+    <div class="checkpoint">
+      Learning goal: Distinguish analog vs digital, simplex/half‑duplex/full‑duplex, and compare common media.
+    </div>
+
+    <div class="grid-two">
+      <div>
+        <h3>Modes & Types</h3>
+        <ul style="font-size:13px; padding-left:18px;">
+          ><b>Analog</b>: continuous signals (e.g., old radio).</l/li>
+          ><b>Digital</b>: bits (0/1) as pulses – what networks use.</l/li>
+          ><b>Simplex</b>: one‑way only (keyboard → PC).</l/li>
+          ><b>Half‑duplex</b>: two‑way, turn‑taking (walkie‑talkie).</l/li>
+          ><b>Full‑duplex</b>: two‑way, simultaneous (phone call).</li>
         </ul>
       </div>
       <div>
-        <h3>Software &amp; Servers</h3>
-        <ul class="quest-list" id="chapter6b">
-          <li data-xp="10">Explain the purpose of network management software and give one example task it does.</li>
-          <li data-xp="10">Describe what a software firewall does on a single host.</li>
-          <li data-xp="10">Explain the role of a server in the client-server model when you load a web page.</li>
-          <li data-xp="10">List at least 3 types of servers (e.g. web, file, mail, database) and what each serves.</li>
-        </ul>
+        <h3>Media Arena</h3>
+        <table>
+          <tr><th>Medium</th><th>Typical Use</th></tr>
+          <tr><td>Twisted pair</td><td>Ethernet in LANs</td></tr>
+          <tr><td>Coaxial</td><td>Cable TV, older LANs</td></tr>
+          <tr><td>Fiber</td><td>Backbones, high‑speed WANs</td></tr>
+          <tr><td>Radio</td><td>Wi‑Fi, cellular</td></tr>
+          <tr><td>Microwave</td><td>Satellite links</td></tr>
+          <tr><td>Infrared</td><td>Short‑range remotes</td></tr>
+        </table>
       </div>
     </div>
+
+    <ul class="quest-list">
+      >
+        <div class="quest-header">
+          <span class="quest-title">Quest 5.1 – Mode Detective</span>
+          <span class="quest-xp">+50 XP</span>
+        </div>
+        <div class="quest-body">
+          Pick 3 real‑world communication examples (e.g., live stream, walkie‑talkie, TV broadcast) and classify
+          each as <span class="key">simplex</span>, <span class="key">half‑duplex</span>,
+          or <span class="key">full‑duplex</span>, with a one‑line justification.
+        </div>
+      </li>
+      >
+        <div class="quest-header">
+          <span class="quest-title">Quest 5.2 – Media Design Choice</span>
+          <span class="quest-xp">+50 XP</span>
+        </div>
+        <div class="quest-body">
+          You are designing a network for:
+          campus backbone, home Wi‑Fi, and an inter‑city link.
+          For each, choose a primary medium and defend your choice with two bullet points: 
+          <span class="key">speed</span>, <span class="key">distance</span>, <span class="key">cost</span>, <span class="key">mobility</span>.
+        </div>
+      </li>
+    </ul>
+
+    <details>
+      <summary class="btn-ghost" style="display:inline-block;margin-top:8px;cursor:pointer;">
+        Checkpoint Question (Self‑test)
+      </summary>
+      <div class="question-block">
+        <strong>CQ7:</strong> Why is full‑duplex important for modern interactive applications like video calls?
+      </div>
+    </details>
+
+    <button type="button" onclick="claimXP(5,100)">Claim XP for Chapter 5</button>
   </section>
 
+  <!-- CHAPTER 6: NETWORK COMPONENTS -->
   <section class="card">
-    <div class="tag">Progress &amp; Rewards</div>
-    <h2>Titles &amp; Achievements</h2>
-    <p>As you complete quests, tick them and watch your XP rise. Use these milestones to pace your study:</p>
-    <div class="badge-row">
-      <div class="badge" id="badge1">Level 1: Cable Curious (50 XP)</div>
-      <div class="badge" id="badge2">Level 2: Packet Pupil (100 XP)</div>
-      <div class="badge" id="badge3">Level 3: LAN Tactician (180 XP)</div>
-      <div class="badge" id="badge4">Level 4: WAN Strategist (260 XP)</div>
-      <div class="badge" id="badge5">Level 5: Protocol Sage (360 XP)</div>
+    <h2>Chapter 6: Network Components – Endpoints & Intermediaries</h2>
+    <div class="checkpoint">
+      Learning goal: Explain the roles of end devices, NICs, switches, routers, hubs, and access points in a LAN/WAN.
     </div>
-    <div class="btn-row">
-      <button id="resetBtn" class="secondary">Reset progress</button>
-      <button id="exportBtn">Export progress (JSON)</button>
-    </div>
-    <textarea id="exportBox" class="hidden" rows="4" style="width:100%; margin-top:10px; font-size:0.8rem;"></textarea>
+
+    <table>
+      <tr><th>Component</th><th>Role</th></tr>
+      <tr><td>End device</td><td>Source/destination of data (hosts)</td></tr>
+      <tr><td>NIC</td><td>Connects device to network, has MAC</td></tr>
+      <tr><td>Switch</td><td>Connects devices in a LAN using MACs</td></tr>
+      <tr><td>Router</td><td>Connects networks using IP</td></tr>
+      <tr><td>Hub</td><td>Legacy: broadcasts bits to all ports</td></tr>
+      <tr><td>Access point</td><td>Connects Wi‑Fi clients to wired LAN</td></tr>
+      <tr><td>Modem</td><td>Bridge to ISP over cable/DSL/fiber</td></tr>
+    </table>
+
+    <ul class="quest-list">
+      >
+        <div class="quest-header">
+          <span class="quest-title">Quest 6.1 – Map Your Home Network</span>
+          <span class="quest-xp">+70 XP</span>
+        </div>
+        <div class="quest-body">
+          Draw your home network and label each device as 
+          <span class="key">End</span>, <span class="key">Switch</span>, <span class="key">Router</span>,
+          <span class="key">AP</span>, or <span class="key">Modem</span>. 
+          Annotate where <span class="important">MAC addresses</span> and <span class="important">IP addresses</span> are most important.
+        </div>
+      </li>
+      >
+        <div class="quest-header">
+          <span class="quest-title">Quest 6.2 – Hub vs Switch Thought Experiment</span>
+          <span class="quest-xp">+70 XP</span>
+        </div>
+        <div class="quest-body">
+          Imagine replacing all switches in an office with hubs.
+          Describe in 3 bullet points what would happen to: 
+          <span class="key">performance</span>, <span class="key">collisions</span>, and <span class="key">security</span>.
+        </div>
+      </li>
+    </ul>
+
+    <details>
+      <summary class="btn-ghost" style="display:inline-block;margin-top:8px;cursor:pointer;">
+        Checkpoint Question (Self‑test)
+      </summary>
+      <div class="question-block">
+        <strong>CQ8:</strong> Why are switches and routers essential for efficient, secure communication instead of just chaining hubs?
+      </div>
+    </details>
+
+    <button type="button" onclick="claimXP(6,140)">Claim XP for Chapter 6</button>
   </section>
 
+  <!-- CHAPTER 7: SERVERS, SOFTWARE, SECURITY -->
+  <section class="card">
+    <h2>Chapter 7: Servers, Management & Firewalls – Network Brain</h2>
+    <div class="checkpoint">
+      Learning goal: Describe what servers do, what management software does, and how software firewalls protect hosts.
+    </div>
+
+    <div class="grid-two">
+      <div>
+        <h3>Key Roles</h3>
+        <ul style="font-size:13px; padding-left:18px;">
+          ><b>Servers</b>: provide services (web, mail, file, DB).</l/li>
+          ><b>Management software</b>: monitor, configure, troubleshoot.</l/li>
+          ><b>Software firewalls</b>: host‑level traffic filters (e.g., iptables).</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Mini‑Scenario</h3>
+        <p style="font-size:13px;">
+          Think of a web app you use daily. Identify: the client (you), the server, one management tool that might watch traffic,
+          and the firewall rules that could be protecting both sides.
+        </p>
+      </div>
+    </div>
+
+    <ul class="quest-list">
+      >
+        <div class="quest-header">
+          <span class="quest-title">Quest 7.1 – Client–Server Story</span>
+          <span class="quest-xp">+60 XP</span>
+        </div>
+        <div class="quest-body">
+          Write a short story (6–8 lines) of what happens when you visit a website:
+          mention <span class="key">client</span>, <span class="key">server</span>, <span class="key">HTTP</span>, 
+          <span class="key">TCP/IP</span>, and a <span class="key">firewall</span> making an allow/deny decision.
+        </div>
+      </li>
+      >
+        <div class="quest-header">
+          <span class="quest-title">Quest 7.2 – Firewall Rule Design</span>
+          <span class="quest-xp">+60 XP</span>
+        </div>
+        <div class="quest-body">
+          Pretend you are configuring a software firewall on your laptop.
+          Define three simple rules (in plain language) to:
+          allow web browsing, allow SSH to a lab box, and block all incoming ICMP (ping).
+          Explain why each rule is useful.
+        </div>
+      </li>
+    </ul>
+
+    <details>
+      <summary class="btn-ghost" style="display:inline-block;margin-top:8px;cursor:pointer;">
+        Checkpoint Question (Self‑test)
+      </summary>
+      <div class="question-block">
+        <strong>CQ9:</strong> How do host‑based firewalls complement network firewalls in a defence‑in‑depth strategy?
+      </div>
+    </details>
+
+    <button type="button" onclick="claimXP(7,120)">Claim XP for Chapter 7</button>
+  </section>
+
+  <!-- ENDGAME -->
+  <section class="card">
+    <h2>Endgame: Network Foundations Boss Check</h2>
+    <p style="font-size:13px;">
+      When you have honestly completed the quests and can answer the checkpoint questions without looking back,
+      you have effectively “cleared the level” for Network Foundations. Use this quick boss check:
+    </p>
+    <div class="question-block">
+      <strong>Boss Question:</strong> 
+      Explain, in one coherent paragraph, the full journey of data when you upload a file from your laptop at home to a server in another country,
+      mentioning: LAN, WAN, router, modem, ISP, OSI/TCP‑IP layers, protocols, transmission media, and at least one security control.
+    </div>
+    <p style="font-size:13px;">
+      If you can answer that fluently, you are ready to move on to more advanced cyber‑security topics like packet analysis, routing protocols,
+      or firewall rule‑sets.
+    </p>
+  </section>
 </main>
 
 <footer>
-  Tip: Actually say or write answers before clicking quests. The challenge is what makes the knowledge stick.
+  Track your progress by actually writing answers to the quests and checkpoint questions in a separate notes file or physical notebook.
 </footer>
 
 <script>
-  const xpSpan = document.getElementById('xp');
-  const levelSpan = document.getElementById('level');
-  const xpFill = document.getElementById('xpFill');
-  const resetBtn = document.getElementById('resetBtn');
-  const exportBtn = document.getElementById('exportBtn');
-  const exportBox = document.getElementById('exportBox');
-  const badges = [
-    { id: 'badge1', xp: 50 },
-    { id: 'badge2', xp: 100 },
-    { id: 'badge3', xp: 180 },
-    { id: 'badge4', xp: 260 },
-    { id: 'badge5', xp: 360 }
-  ];
-
-  let state = {
-    xp: 0,
-    completed: {}
+  // Very lightweight XP + badges system (client-side only)
+  const chapterXp = {
+    1: 0,
+    2: 0,
+    3: 0,
+    4: 0,
+    5: 0,
+    6: 0,
+    7: 0
   };
 
-  function loadState() {
-    try {
-      const raw = localStorage.getItem('netGuildState');
-      if (!raw) return;
-      const parsed = JSON.parse(raw);
-      if (typeof parsed.xp === 'number' && parsed.completed) {
-        state = parsed;
-      }
-    } catch(e) {
-      console.warn('Could not load state');
-    }
-  }
-
-  function saveState() {
-    localStorage.setItem('netGuildState', JSON.stringify(state));
-  }
-
-  function calcLevel(xp) {
-    if (xp < 100) return 1;
-    if (xp < 200) return 2;
-    if (xp < 300) return 3;
-    if (xp < 400) return 4;
-    return 5;
+  function totalXP() {
+    return Object.values(chapterXp).reduce((a,b) => a + b, 0);
   }
 
   function updateUI() {
-    xpSpan.textContent = state.xp;
-    levelSpan.textContent = calcLevel(state.xp);
-    const percent = Math.min(100, (state.xp % 100));
-    xpFill.style.width = percent + '%';
+    const xp = totalXP();
+    document.getElementById("statXp").textContent = xp;
+    const maxXp = 600; // sum of all chapter XP in this design
+    const width = Math.min(100, (xp / maxXp) * 100);
+    document.getElementById("xpBar").style.width = width + "%";
+    document.getElementById("xpText").textContent = "XP: " + xp + " / " + maxXp;
 
-    document.querySelectorAll('.quest-list li').forEach((li, index) => {
-      if (state.completed[index]) {
-        li.classList.add('completed');
-      } else {
-        li.classList.remove('completed');
-      }
-    });
+    // Level text (simple thresholds)
+    let level = "Level 1: Network Newbie";
+    if (xp >= 120 && xp < 300) level = "Level 2: Packet Pupil";
+    else if (xp >= 300 && xp < 480) level = "Level 3: Segment Specialist";
+    else if (xp >= 480) level = "Level 4: Frame Master";
+    document.getElementById("levelText").textContent = level;
 
-    badges.forEach(b => {
-      const el = document.getElementById(b.id);
-      if (!el) return;
-      if (state.xp >= b.xp) {
-        el.style.borderColor = '#22c55e';
-        el.style.color = '#bbf7d0';
-      } else {
-        el.style.borderColor = '#4b5563';
-        el.style.color = '#e5e7eb';
-      }
+    // Chapters unlocked count
+    let unlocked = 0;
+    for (const c in chapterXp) {
+      if (chapterXp[c] > 0) unlocked++;
+    }
+    document.getElementById("statChapters").textContent = unlocked + " / 7";
+
+    // Badges
+    if (chapterXp[2] > 0 && chapterXp[3] > 0) {
+      unlockBadge("badgeLayers");
+    }
+    if (chapterXp[4] > 0) {
+      unlockBadge("badgeProtocols");
+    }
+    if (chapterXp[5] > 0 && chapterXp[6] > 0 && chapterXp[7] > 0) {
+      unlockBadge("badgeInfra");
+    }
+  }
+
+  function unlockBadge(id) {
+    const el = document.getElementById(id);
+    if (el && el.classList.contains("locked")) {
+      el.classList.remove("locked");
+      el.style.background = "rgba(72, 187, 120, 0.15)";
+      el.style.borderColor = "#48bb78";
+    }
+  }
+
+  function claimXP(chapter, amount) {
+    if (chapterXp[chapter] > 0) {
+      alert("You already claimed XP for this chapter. If you want to re‑do it, reset manually.");
+      return;
+    }
+    const confirmMsg = "Only click OK if you really did the quests & can answer the checkpoint questions without notes.";
+    if (!confirm(confirmMsg)) return;
+    chapterXp[chapter] = amount;
+    updateUI();
+  }
+
+  function toggleAllChapters() {
+    const cards = document.querySelectorAll("section.card");
+    cards.forEach((card, index) => {
+      if (index === 0) return; // skip player sheet
+      const details = card.querySelector("details");
+      if (details) details.open = !details.open;
     });
   }
 
-  function setupQuests() {
-    const all = document.querySelectorAll('.quest-list li');
-    all.forEach((li, index) => {
-      const id = index; // consistent index across reload
-      const xp = parseInt(li.getAttribute('data-xp') || '5', 10);
-      li.addEventListener('click', () => {
-        const done = !!state.completed[id];
-        if (done) {
-          delete state.completed[id];
-          state.xp = Math.max(0, state.xp - xp);
-        } else {
-          state.completed[id] = true;
-          state.xp += xp;
-        }
-        saveState();
-        updateUI();
-      });
-    });
-  }
-
-  resetBtn.addEventListener('click', () => {
-    if (!confirm('Reset all quest progress?')) return;
-    state = { xp: 0, completed: {} };
-    saveState();
-    updateUI();
-  });
-
-  exportBtn.addEventListener('click', () => {
-    exportBox.classList.remove('hidden');
-    exportBox.value = JSON.stringify(state, null, 2);
-    exportBox.select();
-  });
-
-  loadState();
-  window.addEventListener('DOMContentLoaded', () => {
-    setupQuests();
-    updateUI();
-  });
+  // Initialize UI
+  updateUI();
 </script>
 </body>
 </html>
